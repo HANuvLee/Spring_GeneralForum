@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+    
+    <select id="boardList" parameterType="com.spring.board.vo.PageVo" resultType="com.spring.board.vo.BoardVo">
+        SELECT 
+          BOARD_TYPE
+		  ,BOARD_NUM
+		  ,BOARD_TITLE
+		  ,BOARD_COMMENT
+		  ,TOTAL_CNT
+		FROM 
+		(
+		   SELECT
+                C.CODE_NAME AS BOARD_TYPE
+				,B.BOARD_NUM
+				,B.BOARD_TITLE
+				,B.BOARD_COMMENT
+		      	,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+		      	,COUNT(*) OVER() AS TOTAL_CNT
+			FROM
+			BOARD B, COM_CODE C
+            WHERE B.BOARD_TYPE = C.CODE_ID
+            <if test="chkValue != null">
+           		 AND B.BOARD_TYPE IN
+	            <foreach collection="chkValue" item="chkValue" open="(" separator="," close=")">
+	            #{chkValue}
+	            </foreach>
+            </if>
+          )
+          WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+    </select>
+    
+    <select id="boardTotal" parameterType="Integer" resultType="Integer">
+		  SELECT
+		      	COUNT(*) AS TOTAL_CNT
+			FROM
+				BOARD	
+    </select>
+    	
+    <select id="boardView" parameterType="com.spring.board.vo.BoardVo" resultType="com.spring.board.vo.BoardVo">
+    	SELECT
+        	BOARD_TYPE
+			,BOARD_NUM
+			,BOARD_TITLE
+			,BOARD_COMMENT
+			,CREATOR
+		FROM
+			BOARD
+    	WHERE 	BOARD_TYPE = #{board_type}
+    	AND 	BOARD_NUM  = #{board_num}
+    </select>	
+    
+    <select id="boardInsert" parameterType="com.spring.board.vo.BoardVo">
+        INSERT INTO 
+        BOARD
+        (BOARD_TYPE
+        ,BOARD_NUM
+        ,BOARD_TITLE
+        ,BOARD_COMMENT
+        ,CREATOR
+        ,CREATE_TIME 	
+        ,MODIFIER
+        ,MODIFIED_TIME
+        )
+        VALUES
+        (#{board_type}
+        ,(SELECT TO_NUMBER(NVL(MAX(BOARD_NUM), 0) + 1)
+	      FROM BOARD
+	      WHERE BOARD_TYPE = #{board_type})
+        ,#{board_title}
+        ,#{board_comment}
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        )
+    </select>
+    
+    <update id="boardUpdate" parameterType="com.spring.board.vo.BoardVo">
+    	update board
+		set board_title = #{board_title}, board_comment = #{board_comment}
+		where board_type = #{board_type} 
+		and board_num = #{board_num}
+    </update>
+    
+    <select id="phoneNumSelect" resultType="com.spring.board.vo.Come_codeVo">
+    	select code_name
+		from com_code
+		where code_type = 'phone'
+    </select>
+    
+    <select id="idDupChk" parameterType="String" resultType="Integer">
+    	select count(user_id)
+		from user_info
+		where user_id = #{user_id}
+    </select>
+    
+    <select id="join" parameterType="com.spring.board.vo.User_infoVo">
+    	insert into 
+			user_info
+			(user_id
+			,user_pw
+			,user_name
+			,user_phone1
+			,user_phone2
+			,user_phone3
+			,user_addr1
+			,user_addr2
+			,user_company
+			,creator
+			,create_time
+			,modifier
+			,modified_time
+			)
+			values
+			(#{user_id}
+			,#{user_pw}
+			,#{user_name}
+			,#{user_phone1}
+			,#{user_phone2}
+			,#{user_phone3}
+			,#{user_addr1}
+			,#{user_addr2}
+			,#{user_company}
+			,#{user_name}
+			,TO_CHAR(SYSDATE)
+			,#{user_name}
+			,TO_CHAR(SYSDATE)
+			)
+    </select>
+</mapper>
