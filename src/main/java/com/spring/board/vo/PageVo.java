@@ -6,16 +6,18 @@ public class PageVo {
 	
 	private int pageNo = 0;
 	
-	private ArrayList<String> chkValue;
+	private String[] chkValue;
 
 
-	public ArrayList<String> getChkValue() {
+	public String[] getChkValue() {
 		return chkValue;
 	}
 
-	public void setChkValue(ArrayList<String> chkValue) {
+	
+	public void setChkValue(String[] chkValue) {
 		this.chkValue = chkValue;
 	}
+
 
 	public int getPageNo() {
 		return pageNo;

@@ -32,6 +32,7 @@ import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.PagingVo;
 import com.spring.board.vo.User_infoVo;
 import com.spring.common.CommonUtil;
 
@@ -45,25 +46,31 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Locale locale, Model model, PageVo pageVo, @RequestParam(required = false)ArrayList<String> chk, HttpSession session) throws Exception{
-		int page = 1;
+	public String boardList(Locale locale, Model model, String currentPage, PageVo pageVo, @RequestParam(required = false)String[] chk, HttpSession session) throws Exception{
+
 		int totalCnt = 0;
 		
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
-		
+	
 		pageVo.setChkValue(chk);
 		
-		if(pageVo.getPageNo() == 0){
-			pageVo.setPageNo(page);
-			}
+		if (currentPage == null){
+			currentPage = "1";
+			pageVo.setPageNo(Integer.parseInt(currentPage));
+		}else {
+			pageVo.setPageNo(Integer.parseInt(currentPage));
+		}
 		
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt();
 		
+		PagingVo pg = new PagingVo(totalCnt, currentPage);
+		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
-		model.addAttribute("pageNo", page);
+		model.addAttribute("pg", pg);
+		
 		if(res == null) {
 			return "redirect:/login/Login.do";
 		}else {

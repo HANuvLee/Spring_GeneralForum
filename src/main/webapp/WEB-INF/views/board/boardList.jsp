@@ -67,6 +67,17 @@
 			<input class="btn btn-dark" type="submit" value="조회">
 		</form>
 	</div>
+	<div class="currentpage">
+		 <c:if test="${pg.startPage > pg.pageBlock}">
+			<a href="/board/boardList.do?currentPage=${pg.startPage-pg.pageBlock}&chk=${chkValue}">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
+				<a class="currentpage1" href="/board/boardList.do?currentPage=${i}&chk=${chkValue}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${pg.endPage < pg.totalPage}">
+			<a  href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}&chk=${chkValue}">[다음]</a>
+		</c:if>
+	</div>
 </body>
 <script type="text/javascript">
 	//전체 체크 박스 클릭 시 name이 chk인 체크박스 모두 checked로 활성화 
@@ -88,6 +99,7 @@
 			else
 				$("#allchk").prop("checked", true);
 		});
+		
 	});
 </script>
 </html>
