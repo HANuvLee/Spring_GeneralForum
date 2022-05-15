@@ -21,10 +21,19 @@
 	border-top: 2px solid #D2D2D2;
 	border-bottom: 2px solid #D2D2D2;
 }
+.currentpage{
+	text-align: center;
+}
 </style>
 <title>list</title>
 </head>
 <body>
+	<c:forEach items="${chkList}" var ="chklist" >
+		<c:if test="${chklist != null}">
+			<input type="text" id="chkValueList" name="chkList" value="${chklist}">
+		</c:if>
+	</c:forEach>
+
 	<div style="margin: 50px 0px 0px 400px">
 		<a href="/board/Join.do" class="joinbtn">join</a>	
 	</div>
@@ -48,6 +57,17 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="currentpage">
+		 <c:if test="${pg.startPage > pg.pageBlock}">
+			<a href="/board/boardList.do?currentPage=${pg.startPage-pg.pageBlock}">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
+				<a class="currentpage1" href="/board/boardList.do?currentPage=${i}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${pg.endPage < pg.totalPage}">
+			<a  href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>
+		</c:if>
+	</div>
 	<c:if test="${res.user_id != null}">
 		<div style="margin-left: 780px;">
 			<a href="/board/boardWrite.do">글쓰기</a>
@@ -67,28 +87,10 @@
 			<input class="btn btn-dark" type="submit" value="조회">
 		</form>
 	</div>
-	<div class="currentpage">
-		 <c:if test="${pg.startPage > pg.pageBlock}">
-			<a href="/board/boardList.do?currentPage=${pg.startPage-pg.pageBlock}&chk=${chkValue}">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
-				<a class="currentpage1" href="/board/boardList.do?currentPage=${i}&chk=${chkValue}">[${i}]</a>
-		</c:forEach>
-		<c:if test="${pg.endPage < pg.totalPage}">
-			<a  href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}&chk=${chkValue}">[다음]</a>
-		</c:if>
-	</div>
 </body>
 <script type="text/javascript">
 	//전체 체크 박스 클릭 시 name이 chk인 체크박스 모두 checked로 활성화 
 	$("document").ready(function() {
-		$("#allchk").click(function() {
-			if ($("#allchk").is(":checked"))
-				$("input[name=chk]").prop("checked", true);
-			else
-				$("input[name=chk]").prop("checked", false);
-		});
-
 		//체크박스의 전체 길이와 체크된 체크박스의 길이를 변수에 대입하여 체크 여부에 따른 전체체크 활성화 및 비활성화 
 		$("input[name=chk]").click(function() {
 			var total = $("input[name=chk]").length;
@@ -99,7 +101,6 @@
 			else
 				$("#allchk").prop("checked", true);
 		});
-		
 	});
 </script>
 </html>

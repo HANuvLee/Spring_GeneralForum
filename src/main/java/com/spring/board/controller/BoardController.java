@@ -1,32 +1,20 @@
 package com.spring.board.controller;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.spring.board.HomeController;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
@@ -35,7 +23,6 @@ import com.spring.board.vo.PageVo;
 import com.spring.board.vo.PagingVo;
 import com.spring.board.vo.User_infoVo;
 import com.spring.common.CommonUtil;
-
 
 @Controller
 public class BoardController {
@@ -47,13 +34,13 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model, String currentPage, PageVo pageVo, @RequestParam(required = false)String[] chk, HttpSession session) throws Exception{
-
+	
 		int totalCnt = 0;
 		
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 	
-		pageVo.setChkValue(chk);
+		pageVo.setChk(chk);
 		
 		if (currentPage == null){
 			currentPage = "1";
@@ -70,7 +57,7 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pg", pg);
-		
+
 		if(res == null) {
 			return "redirect:/login/Login.do";
 		}else {

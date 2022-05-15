@@ -21,10 +21,10 @@
 			FROM
 			BOARD B, COM_CODE C
             WHERE B.BOARD_TYPE = C.CODE_ID
-            <if test="chkValue != null">
+            <if test="chk != null">
            		 AND B.BOARD_TYPE IN
-	            <foreach collection="chkValue" item="chkValue" open="(" separator="," close=")">
-	            #{chkValue}
+	            <foreach collection="chk" item="chk" open="(" separator="," close=")">
+	            #{chk}
 	            </foreach>
             </if>
           )

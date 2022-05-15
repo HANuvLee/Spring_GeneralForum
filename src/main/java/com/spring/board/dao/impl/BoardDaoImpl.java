@@ -78,5 +78,4 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("join", user_infoVo);
 	}
-	
 }

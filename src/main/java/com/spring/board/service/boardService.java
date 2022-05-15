@@ -28,4 +28,5 @@ public interface boardService {
 
 	public int join(User_infoVo user_infoVo) throws Exception;
 
+
 }
