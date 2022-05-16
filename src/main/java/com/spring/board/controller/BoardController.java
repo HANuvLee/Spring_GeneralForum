@@ -1,7 +1,9 @@
 package com.spring.board.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpSession;
@@ -34,7 +36,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model, String currentPage, PageVo pageVo, HttpSession session) throws Exception{
-	
+		
 		int totalCnt = 0;
 		
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
@@ -49,12 +51,12 @@ public class BoardController {
 		
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt(pageVo);
-		
 		PagingVo pg = new PagingVo(totalCnt, currentPage);
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pg", pg);
+		model.addAttribute("chkList",pageVo.getChk());
 
 		if(res == null) {
 			return "redirect:/login/Login.do";
