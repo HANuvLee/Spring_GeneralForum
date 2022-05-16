@@ -16,7 +16,7 @@ public interface boardService {
 
 	public BoardVo selectBoard(String board_type, int board_num) throws Exception;
 
-	public int selectBoardCnt() throws Exception;
+	public int selectBoardCnt(PageVo pageVo) throws Exception;
 
 	public int boardInsert(BoardVo boardVo) throws Exception;
 

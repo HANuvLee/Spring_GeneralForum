@@ -31,11 +31,15 @@
           WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
     </select>
     
-    <select id="boardTotal" parameterType="Integer" resultType="Integer">
-		  SELECT
-		      	COUNT(*) AS TOTAL_CNT
-			FROM
-				BOARD	
+    <select id="boardTotal" parameterType="com.spring.board.vo.PageVo" resultType="Integer">
+		  	SELECT COUNT(*) AS TOTAL_CNT
+			FROM BOARD	
+			<if test="chk != null">
+				WHERE BOARD_TYPE IN
+				<foreach collection="chk" item="chk" open="(" separator="," close=")">
+				#{chk}
+				</foreach>
+			</if>
     </select>
     	
     <select id="boardView" parameterType="com.spring.board.vo.BoardVo" resultType="com.spring.board.vo.BoardVo">
