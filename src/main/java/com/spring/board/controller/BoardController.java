@@ -168,4 +168,6 @@ public class BoardController {
 		
 		return "redirect:/login/Login.do";
 	}
+	
+
 }
