@@ -35,7 +35,7 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Locale locale, Model model, String currentPage, PageVo pageVo, HttpSession session) throws Exception{
+	public String boardList(Model model, String currentPage, PageVo pageVo, HttpSession session) throws Exception{
 		
 		int totalCnt = 0;
 		
@@ -66,7 +66,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardView.do", method = RequestMethod.GET)
-	public String boardView(Locale locale, Model model, HttpSession session
+	public String boardView(Model model, HttpSession session
 			,@PathVariable("boardType")String boardType
 			,@PathVariable("boardNum")int boardNum) throws Exception{
 		
@@ -86,7 +86,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
-	public String boardWrite(Locale locale, Model model, HttpSession session)throws Exception{
+	public String boardWrite(Model model, HttpSession session)throws Exception{
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
 		if(res == null) {
 			return "redirect:/login/Login.do";
@@ -95,7 +95,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
-	public String boardWriteAction(Locale locale,BoardVo boardVo) throws Exception{
+	public String boardWriteAction(BoardVo boardVo) throws Exception{
 				
 		HashMap<String, String> result = new HashMap<String, String>();
 		CommonUtil commonUtil = new CommonUtil();
@@ -114,7 +114,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value ="/board/boardUpdate.do" , method = RequestMethod.GET)
-	public String boardupdate(Locale locale, Model model, String board_type, int board_num, HttpSession session) throws Exception {
+	public String boardupdate(Model model, String board_type, int board_num, HttpSession session) throws Exception {
 		
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
 		if(res == null) {
@@ -132,7 +132,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/board/boardUpdateAction.do", method = RequestMethod.POST)
-	public String boardUpdateAction(Locale locale, Model model, BoardVo boardVo) throws Exception{
+	public String boardUpdateAction(Model model, BoardVo boardVo) throws Exception{
 		
 		int updateResult = boardService.boardUpdate(boardVo);
 		

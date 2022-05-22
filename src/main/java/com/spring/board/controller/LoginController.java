@@ -25,7 +25,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/login/Login.do", method = RequestMethod.GET) 
-	public String login(Locale locale, Model model)throws Exception{
+	public String login(Model model)throws Exception{
 		
 		return "board/login";
 	}
