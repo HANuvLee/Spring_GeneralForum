@@ -14,6 +14,9 @@
 <title>boardView</title>
 </head>
 <body>
+	<div style="margin-left: 850px;">
+		<a href="/board/boardList.do">List</a>
+	</div>
 	<table align="center" class="table">
 		<tr>
 			<td width="120" align="center">Title</td>
@@ -21,7 +24,7 @@
 		</tr>
 		<tr>
 			<td height="300" align="center">Comment</td>
-			<td><textarea rows="20" cols="60">${board.board_comment}</textarea>
+			<td><textarea class="boardComent" rows="15" cols="60">${board.board_comment}</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -29,14 +32,50 @@
 			<td>${board.creator}</td>
 		</tr>
 	</table>
-	<div style="margin-left: 850px;">
-		<a href="/board/boardList.do">List</a> 
+	<div style="margin-left: 850px;"> 
 		<c:set var="creator" value="${board.creator}" /> 
 		<c:set var="user_name" value="${res.user_name}" />
 		<c:if test="${creator eq user_name}">
 			<a href="/board/boardUpdate.do?board_type=${board.board_type}&board_num=${board.board_num}">Update</a>
 		</c:if>
 	</div>
+	 <!-- Comments section-->
+    <section class="mb-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <!-- Comment form-->
+                <form class="mb-4">
+                	<textarea class="form-control" rows="3" placeholder="댓글을 작성하고 대화에 참여하세요!"></textarea>
+                </form>
+                <!-- Comment with nested comments-->
+            <!--     <div class="d-flex mb-4">
+                    Parent comment
+                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                    <div class="ms-3">
+                        <div class="fw-bold">Commenter Name</div>
+                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                        Child comment 1
+                        <div class="d-flex mt-4">
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">Commenter Name</div>
+                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                            </div>
+                        </div>
+                        Child comment 2
+                        <div class="d-flex mt-4">
+                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                            <div class="ms-3">
+                                <div class="fw-bold">Commenter Name</div>
+                                When you put money directly to a problem, it makes a good headline.
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Single comment-->
+            </div>
+        </div>
+    </section>
 </body>
 <script type="text/javascript">
 	
