@@ -6,16 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<style type="text/css">
-input {
-	border: 0 solid black;
-}
-
-input:focus {
-	outline: none;
-}
-</style>
-<title>boardView</title>
+<link href="/resources/css/boardUpdate.css" rel="stylesheet">
+<title>boardUpdate</title>
 </head>
 <body>
 	<form id="updateForm" action="/board/boardUpdateAction.do" method="post">
@@ -53,28 +45,5 @@ input:focus {
 		</table>
 	</form>
 </body>
-<script type="text/javascript">
-	$('#chkUpdate').on("click", function() {
-		var board_title = $('#bd_tit').val();
-		var board_cont = $('#bd_cont').val();
-		
-		if (board_title ==''){
-			alert("Title을 작성해 주세요.")
-			$('#bd_tit').val("");
-			$('#bd_tit').focus();
-			
-			return false;
-		}
-		
-		if(board_cont ==''){
-			alert("Comment를 작성해 주세요.")
-			$('#bd_cont').val("");
-			$('#bd_cont').focus();
-			
-			return false;
-		}
-		
-		$('#updateForm').submit();
-	});
-</script>
+<script type="text/javascript" src="/resources/js/boardUpdate.js"></script>
 </html>

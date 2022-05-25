@@ -8,23 +8,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="/resources/css/boardList.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<style type="text/css">
-.joinbtn {
-	text-align: left;
-}
-
-.table {
-	margin: 0px auto 10px !important;
-	width: 500px;
-	border-top: 2px solid #D2D2D2;
-	border-bottom: 2px solid #D2D2D2;
-}
-.currentpage{
-	text-align: center;
-}
-</style>
 <title>list</title>
 </head>
 <body>
@@ -88,37 +74,5 @@
 		</form>
 	</div>
 </body>
-<script type="text/javascript">
-	//전체 체크 박스 클릭 시 name이 chk인 체크박스 모두 checked로 활성화 
-	$("document").ready(function() {
-		$("#allchk").click(function() {
-			if($("#allchk").is(":checked"))
-				$("input[name=chk]").prop("checked", true);
-			else
-				$("input[name=chk]").prop("checked", false);
-		})
-		
-		//체크박스의 전체 길이와 체크된 체크박스의 길이를 변수에 대입하여 체크 여부에 따른 전체체크 활성화 및 비활성화 
-		$("input[name=chk]").click(function() {
-			var total = $("input[name=chk]").length;
-			var chked = $("input[name=chk]:checked").length;
-
-			if (total != chked)
-				$("#allchk").prop("checked", false);
-			else
-				$("#allchk").prop("checked", true);
-		});
-		//체크박스 선택 후 페이지 클릭 시 선택된 체크박스 요소들을 href문자열에 추가하여 전송
-		if($("#chkValueList").length){
-			var chk = new Array();
-			$("input[name=chkList]").each(function(index, item) {
-				chk.push("chk="+$(item).val());
-			})
-			var chklist = chk.join("&");
-			$(".currentpage a").each(function() {
-				this.href += "&"+chklist;
-			})
-		}
-	});
-</script>
+<script type="text/javascript" src="/resources/js/boardList.js"></script>
 </html>

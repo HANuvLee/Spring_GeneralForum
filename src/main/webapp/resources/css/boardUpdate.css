@@ -1,0 +1,9 @@
+@charset "EUC-KR";
+
+input {
+	border: 0 solid black;
+}
+
+input:focus {
+	outline: none;
+}

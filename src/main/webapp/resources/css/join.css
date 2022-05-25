@@ -1,0 +1,38 @@
+@charset "EUC-KR";
+
+.table {
+	margin: 0px auto 10px !important;
+	width: 500px;
+	border-top: 2px solid #D2D2D2;
+	border-bottom: 2px solid #D2D2D2;
+}
+
+.joinBtn {
+	text-align: right;
+}
+
+.user_id{
+	padding-top: 13px !important;
+}
+.pw_check{
+	padding-top: 11px !important;
+}
+.user_name{
+	padding-top: 10px !important;
+}
+
+.address{
+	padding-top: 10px !important;
+}
+
+#user_phone2{
+	width:60px;
+	height:20px;
+	font-size:inherit;
+}
+
+#user_phone3{
+	width:60px;
+	height:20px;
+	font-size:inherit;
+}

@@ -8,10 +8,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="/resources/css/common.css" rel="stylesheet">
-<title>boardView</title>
-</head>
-<title>Insert title here</title>
+<link href="/resources/css/login.css" rel="stylesheet">
+<title>login</title>
 </head>
 <body>
 	<div class="container">
@@ -28,22 +26,5 @@
 		</form>
 	</div>
 </body>
-<script type="text/javascript">
- 	$("#loginBtn").on("click", function(){
- 		var user_id = $("#user_id").val();
- 		var user_pw = $("#user_pw").val();
- 		
-		if(user_id == ''){
-			alert("아이디를 입력해주세요.");
-			$("#user_id").focus();
-			return false;
-		}else if(user_pw == ''){
-			alert("비밀번호를 입력해주세요.");
-			$("#user_pw").focus();
-			return false;
-		}else{
-			$("#loginAction").submit();
-		}
-	});
-</script>
+<script type="text/javascript" src="/resources/js/login.js"></script>
 </html>

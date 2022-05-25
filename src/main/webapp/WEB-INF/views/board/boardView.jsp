@@ -9,16 +9,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="/resources/css/boardView.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>boardView</title>
-<style type="text/css">
-	.table{
-		margin: 50px auto 0;
-		width: 500px;
-		border-top: 2px solid #D2D2D2;
-		border-bottom: 2px solid #D2D2D2;
-	}
-</style>
 </head>
 <body>
 	<table align="center" class="table">

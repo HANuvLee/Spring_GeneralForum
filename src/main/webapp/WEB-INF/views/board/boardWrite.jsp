@@ -10,47 +10,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link href="/resources/css/boardWrite.css" rel="stylesheet">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<title>boardView</title>
-<style type="text/css">
-	.table{
-		margin: 0 auto;
-		width: 500px;
-		border-top: 2px solid #D2D2D2;
-		border-bottom: 2px solid #D2D2D2;
-	}
-</style>
+<title>boardWrite</title>
 </head>
-<script type="text/javascript">
-
-	/* $j(document).ready(function(){
-		
-		$j("#submit").on("click",function(){
-			var $frm = $j('.boardWrite :input');
-			var param = $frm.serialize();
-			
-			$j.ajax({
-			    url : "/board/boardWriteAction.do",
-			    dataType: "json",
-			    type: "POST",
-			    data : param,
-			    success: function(data, textStatus, jqXHR)
-			    {
-					alert("작성완료");
-					
-					alert("메세지:"+data.success);
-					
-					location.href = "/board/boardList.do?pageNo=";
-			    },
-			    error: function (jqXHR, textStatus, errorThrown)
-			    {
-			    	alert("실패");
-			    }
-			});
-		});
-	}); */
-	
-</script>
 <body>
 <form action="/board/boardWriteAction.do" method="post">
 	<div style="margin: 50px 0 10px 840px;">
@@ -100,4 +63,5 @@
 	</div>
 </form>	
 </body>
+<script type="text/javascript" src="/resources/js/boardWrite.js"></script>
 </html>

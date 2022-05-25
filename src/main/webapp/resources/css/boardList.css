@@ -1,0 +1,15 @@
+@charset "EUC-KR";
+
+.joinbtn {
+	text-align: left;
+}
+
+.table {
+	margin: 0px auto 10px !important;
+	width: 500px;
+	border-top: 2px solid #D2D2D2;
+	border-bottom: 2px solid #D2D2D2;
+}
+.currentpage{
+	text-align: center;
+}
