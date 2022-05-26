@@ -133,4 +133,11 @@
 			,TO_CHAR(SYSDATE)
 			)
     </select>
+    
+    <select id="replyListSelect" parameterType= "int" resultType="com.spring.board.vo.ReplyVo">
+    	select reply_num, board_num, board_type, grp, grps, grpl, creator, content, wdate
+		from board_reply
+		where board_num = #{board_num}
+		order by grp asc, grps desc
+    </select>
 </mapper>

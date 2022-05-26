@@ -10,6 +10,7 @@ import com.spring.board.dao.BoardDao;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.ReplyVo;
 import com.spring.board.vo.User_infoVo;
 
 @Repository
@@ -77,5 +78,11 @@ public class BoardDaoImpl implements BoardDao {
 	public int join(User_infoVo user_infoVo) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("join", user_infoVo);
+	}
+
+	@Override
+	public List<ReplyVo> replyList(int board_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("board.replyListSelect", board_num);
 	}
 }

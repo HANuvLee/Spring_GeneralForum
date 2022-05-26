@@ -5,6 +5,7 @@ import java.util.List;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.ReplyVo;
 import com.spring.board.vo.User_infoVo;
 
 public interface BoardDao {
@@ -26,5 +27,7 @@ public interface BoardDao {
 	public int idDupChk(String user_id) throws Exception;
 
 	public int join(User_infoVo user_infoVo) throws Exception;
+
+	public List<ReplyVo> replyList(int board_num);
 
 }

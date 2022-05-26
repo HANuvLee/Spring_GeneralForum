@@ -10,6 +10,7 @@ import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.ReplyVo;
 import com.spring.board.vo.User_infoVo;
 
 @Service
@@ -106,6 +107,12 @@ public class boardServiceImpl implements boardService{
 	public int join(User_infoVo user_infoVo) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDao.join(user_infoVo);
+	}
+
+	@Override
+	public List<ReplyVo> replyList(int board_num) {
+		// TODO Auto-generated method stub
+		return boardDao.replyList(board_num);
 	}
 
 }

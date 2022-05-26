@@ -58,11 +58,13 @@
 		<div style="margin-left: 780px;">
 			<a href="/board/boardWrite.do">글쓰기</a>
 			<a href="/login/Logout.do" class="logoutbtn">로그아웃</a>
-		<c:if test="${res.user_id == null}">
-			<a href="/login/Login.do" class="loginbtn">login</a> 
-		</c:if>
 		</div>
 	</c:if>
+	<div style="margin-left: 860px;">
+		<c:if test="${res.user_id == null}">
+				<a href="/login/Login.do" class="loginbtn">login</a> 
+		</c:if>
+	</div>
 	<div style="margin-left: 500px;">
 		<form method="get" action="/board/boardList.do">
 			<input type="checkbox" id="allchk" value="">전체 
@@ -74,5 +76,5 @@
 		</form>
 	</div>
 </body>
-<script type="text/javascript" src="/resources/js/boardList.js"></script>
+<script type="text/javascript" src="/resources/js/boardList.js" charset="utf-8"></script>
 </html>

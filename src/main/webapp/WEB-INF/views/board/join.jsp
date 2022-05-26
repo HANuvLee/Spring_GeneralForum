@@ -72,5 +72,6 @@
 		<a href="#" id="joinBtn">join</a>
 	</div>
 </body>
-<script type="text/javascript" src="/resources/js/join.js"></script>
+<script type="text/javascript" src="/resources/js/join.js"  charset="utf-8">"
+</script>
 </html>

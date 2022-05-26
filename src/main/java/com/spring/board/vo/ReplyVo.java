@@ -3,6 +3,7 @@ package com.spring.board.vo;
 public class ReplyVo {
 	private int reply_num;
 	private int board_num;
+	private String board_type;
 	private int grp;
 	private int grps;
 	private int grpl;
@@ -21,6 +22,12 @@ public class ReplyVo {
 	}
 	public void setBoard_num(int board_num) {
 		this.board_num = board_num;
+	}
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
 	}
 	public int getGrp() {
 		return grp;

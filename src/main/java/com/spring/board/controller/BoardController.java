@@ -23,6 +23,7 @@ import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
 import com.spring.board.vo.PageVo;
 import com.spring.board.vo.PagingVo;
+import com.spring.board.vo.ReplyVo;
 import com.spring.board.vo.User_infoVo;
 import com.spring.common.CommonUtil;
 
@@ -58,11 +59,10 @@ public class BoardController {
 		model.addAttribute("pg", pg);
 		model.addAttribute("chkList",pageVo.getChk());
 
-		if(res == null) {
-			return "redirect:/login/Login.do";
-		}else {
+//		if(res == null) {
+//			return "redirect:/login/Login.do";
+//		}else {
 		return "board/boardList";
-		}
 	}
 
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardView.do", method = RequestMethod.GET)
@@ -71,9 +71,9 @@ public class BoardController {
 			,@PathVariable("boardNum")int boardNum) throws Exception{
 		
 		User_infoVo res = (User_infoVo)session.getAttribute("res");
-		if(res == null) {
-			return "redirect:/login/Login.do";
-		}
+//		if(res == null) {
+//			return "redirect:/login/Login.do";
+//		}
 		BoardVo boardVo = new BoardVo();
 		
 		boardVo = boardService.selectBoard(boardType,boardNum);
@@ -168,6 +168,18 @@ public class BoardController {
 		
 		return "redirect:/login/Login.do";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyList.do", method = RequestMethod.GET)
+	public List<ReplyVo> replyList(@RequestParam int board_num)throws Exception{
+		
+		List<ReplyVo> replyList = new ArrayList<>();
+		replyList = boardService.replyList(board_num);
+		
+		return replyList;
+	}
+	
+	
 	
 
 }
