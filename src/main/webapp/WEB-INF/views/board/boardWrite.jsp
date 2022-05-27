@@ -54,7 +54,7 @@
 				Writer
 			</td>
 			<td>
-				<input type="text" name="creator" id="creator" value="${res.user_name}" readonly="readonly" size="53">
+				<input type="text" name="creator" id="creator" value="${user_name}" readonly="readonly" size="53">
 			</td>
 		</tr>
 	</table>

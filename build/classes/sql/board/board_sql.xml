@@ -134,10 +134,43 @@
 			)
     </select>
     
-    <select id="replyListSelect" parameterType= "int" resultType="com.spring.board.vo.ReplyVo">
+    <select id="replyListSelect" parameterType= "hashmap" resultType="com.spring.board.vo.ReplyVo">
     	select reply_num, board_num, board_type, grp, grps, grpl, creator, content, wdate
 		from board_reply
 		where board_num = #{board_num}
+		and board_type = #{board_type}
 		order by grp asc, grps desc
+    </select>
+    
+    <select id="replyInsert" parameterType="hashmap" resultType="Integer">
+	    insert into 
+		    board_reply(
+		        reply_num
+		        ,board_num
+		        ,board_type
+		        ,grp
+		        ,grps
+		        ,grpl
+		        ,creator
+		        ,content
+		        ,wdate
+		    )
+		    values(
+		   	 (SELECT TO_NUMBER(NVL(MAX(reply_num), 0) + 1)
+		     	 FROM board_reply
+		     	 WHERE board_num = #{board_num}
+		     	 AND board_type = #{board_type})
+		      ,#{board_num}
+		      ,#{board_type}
+		      ,#{board_num}
+		      ,(SELECT TO_NUMBER(NVL(MAX(grps), 0) + 1)
+		     	 FROM board_reply
+		     	 WHERE board_num = #{board_num}
+		     	 AND board_type = #{board_type})
+		      ,0
+		      ,#{creator}
+		      ,#{content}
+	          ,TO_CHAR(SYSDATE)
+	    	)
     </select>
 </mapper>

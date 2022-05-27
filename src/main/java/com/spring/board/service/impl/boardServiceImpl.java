@@ -1,6 +1,7 @@
 package com.spring.board.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,10 +110,17 @@ public class boardServiceImpl implements boardService{
 		return boardDao.join(user_infoVo);
 	}
 
+	
 	@Override
-	public List<ReplyVo> replyList(int board_num) {
+	public List<ReplyVo> replyList(Map<String, String> param) {
 		// TODO Auto-generated method stub
-		return boardDao.replyList(board_num);
+		return boardDao.replyList(param);
+	}
+
+	@Override
+	public int replyInsert(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.replyInsert(param);
 	}
 
 }

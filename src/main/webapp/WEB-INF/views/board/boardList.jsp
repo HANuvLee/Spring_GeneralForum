@@ -25,8 +25,8 @@
 	</div>
 	<table class="table" id="boardTable">
 		<tr>
-			<c:if test="${res.user_id != null}">
-				<td align="left">&nbsp;&nbsp;${res.user_name}</td>
+			<c:if test="${user_id != null}">
+				<td align="left">&nbsp;&nbsp;${user_name}</td>
 			</c:if>
 			<td colspan="2" style="text-align: right;"><span>total : ${totalCnt}&nbsp;&nbsp;</span></td>
 		</tr>
@@ -54,14 +54,14 @@
 			<a class="nextpage" href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>
 		</c:if>
 	</div>
-	<c:if test="${res.user_id != null}">
+	<c:if test="${user_id != null}">
 		<div style="margin-left: 780px;">
 			<a href="/board/boardWrite.do">글쓰기</a>
 			<a href="/login/Logout.do" class="logoutbtn">로그아웃</a>
 		</div>
 	</c:if>
 	<div style="margin-left: 860px;">
-		<c:if test="${res.user_id == null}">
+		<c:if test="${user_id == null}">
 				<a href="/login/Login.do" class="loginbtn">login</a> 
 		</c:if>
 	</div>

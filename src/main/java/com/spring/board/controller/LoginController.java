@@ -36,7 +36,8 @@ public class LoginController {
 		res = loginService.loginChk(res);
 		
 		if(res != null){
-			session.setAttribute("res", res);
+			session.setAttribute("user_id", res.getUser_id());
+			session.setAttribute("user_name",res.getUser_name());
 			return "redirect:/board/boardList.do";
 		}else {
 			return "redirect:/login/Login.do";

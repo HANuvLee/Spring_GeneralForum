@@ -1,6 +1,7 @@
 package com.spring.board.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +82,14 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<ReplyVo> replyList(int board_num) {
+	public List<ReplyVo> replyList(Map<String, String> param) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("board.replyListSelect", board_num);
+		return sqlSession.selectList("board.replyListSelect", param);
+	}
+
+	@Override
+	public int replyInsert(Map<String, String> param) {
+			
+		return sqlSession.insert("board.replyInsert", param);
 	}
 }

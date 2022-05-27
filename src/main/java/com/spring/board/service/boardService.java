@@ -29,7 +29,9 @@ public interface boardService {
 
 	public int join(User_infoVo user_infoVo) throws Exception;
 
-	public List<ReplyVo> replyList(int board_num);
+	public List<ReplyVo> replyList(Map<String, String> param);
+
+	public int replyInsert(Map<String, String> param);
 
 
 }

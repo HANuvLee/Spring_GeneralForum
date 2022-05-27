@@ -1,6 +1,7 @@
 package com.spring.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.Come_codeVo;
@@ -28,6 +29,8 @@ public interface BoardDao {
 
 	public int join(User_infoVo user_infoVo) throws Exception;
 
-	public List<ReplyVo> replyList(int board_num);
+	public List<ReplyVo> replyList(Map<String, String> param);
+
+	public int replyInsert(Map<String, String> param);
 
 }

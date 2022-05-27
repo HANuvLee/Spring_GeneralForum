@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,9 @@ public class BoardController {
 		
 		int totalCnt = 0;
 		
-		User_infoVo res = (User_infoVo)session.getAttribute("res");
+		String user_id = (String)session.getAttribute("user_id");
+		String user_name = (String)session.getAttribute("user_name");
+		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		
 		if (currentPage == null){
@@ -59,7 +63,7 @@ public class BoardController {
 		model.addAttribute("pg", pg);
 		model.addAttribute("chkList",pageVo.getChk());
 
-//		if(res == null) {
+//		if(user_id == null) {
 //			return "redirect:/login/Login.do";
 //		}else {
 		return "board/boardList";
@@ -70,8 +74,10 @@ public class BoardController {
 			,@PathVariable("boardType")String boardType
 			,@PathVariable("boardNum")int boardNum) throws Exception{
 		
-		User_infoVo res = (User_infoVo)session.getAttribute("res");
-//		if(res == null) {
+		String user_id = (String)session.getAttribute("user_id");
+		String user_name = (String)session.getAttribute("user_name");
+		
+//		if(user_id == null) {
 //			return "redirect:/login/Login.do";
 //		}
 		BoardVo boardVo = new BoardVo();
@@ -87,10 +93,12 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(Model model, HttpSession session)throws Exception{
-		User_infoVo res = (User_infoVo)session.getAttribute("res");
-		if(res == null) {
-			return "redirect:/login/Login.do";
-		}
+		String user_id = (String)session.getAttribute("user_id");
+		String user_name = (String)session.getAttribute("user_name");
+		
+		
+		if(user_id == null) { return "redirect:/login/Login.do"; }
+		 
 		return "board/boardWrite";
 	}
 	
@@ -116,10 +124,12 @@ public class BoardController {
 	@RequestMapping(value ="/board/boardUpdate.do" , method = RequestMethod.GET)
 	public String boardupdate(Model model, String board_type, int board_num, HttpSession session) throws Exception {
 		
-		User_infoVo res = (User_infoVo)session.getAttribute("res");
-		if(res == null) {
-			return "redirect:/login/Login.do";
-		}
+		String user_id = (String)session.getAttribute("user_id");
+		String user_name = (String)session.getAttribute("user_name");
+		
+		
+		 if(user_id == null) { return "redirect:/login/Login.do"; }
+		 
 		BoardVo boardVo = new BoardVo();
 		
 		boardVo = boardService.selectBoard(board_type,board_num);
@@ -171,12 +181,29 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/board/replyList.do", method = RequestMethod.GET)
-	public List<ReplyVo> replyList(@RequestParam int board_num)throws Exception{
+	public List<ReplyVo> replyList(@RequestParam String board_num, @RequestParam String board_type)throws Exception{
+		
+		Map<String, String> param = new HashMap<>();
+		param.put("board_num", board_num);
+		param.put("board_type", board_type);
 		
 		List<ReplyVo> replyList = new ArrayList<>();
-		replyList = boardService.replyList(board_num);
+		replyList = boardService.replyList(param);
 		
 		return replyList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyInsert.do", method = RequestMethod.POST)
+	public int replyInsert(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
+		
+		int replyInsert = 0;
+		
+		String user_name = (String)session.getAttribute("user_name");
+		param.put("creator", user_name);
+		replyInsert = boardService.replyInsert(param);
+		
+		return replyInsert;
 	}
 	
 	
