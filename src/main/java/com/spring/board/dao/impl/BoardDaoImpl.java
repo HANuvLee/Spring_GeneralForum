@@ -92,4 +92,10 @@ public class BoardDaoImpl implements BoardDao {
 			
 		return sqlSession.insert("board.replyInsert", param);
 	}
+
+	@Override
+	public int replyUpdate(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("board.replyUpdate", param);
+	}
 }

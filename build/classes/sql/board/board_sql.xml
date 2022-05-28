@@ -173,4 +173,10 @@
 	          ,TO_CHAR(SYSDATE)
 	    	)
     </select>
+    <update id="replyUpdate"  parameterType="hashmap">
+    	update board_reply set content = ${content} 
+		where board_num = #{board_num}
+		and reply_num = #{reply_num}
+		and board_type = #{board_type}
+    </update>
 </mapper>

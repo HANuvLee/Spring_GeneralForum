@@ -90,8 +90,6 @@
 			},
 			success	: function(data){
 				console.log(data);
-				// 정상적으로 응답 받았을 경우에는 success 콜백이 호출되게 됩니다.
-				// 이 콜백 함수의 파라미터에서는 응답 바디, 응답 코드 그리고 XHR 헤더를 확인할 수 있습니다.
 				let rplisthtml ="";
 				for(const i in data){
 					let reply_num = data[i].reply_num;
@@ -104,26 +102,39 @@
 					let content = data[i].content;
 					let wdate = data[i].wdate;
 					
-					rplisthtml += "<div class='ms-3'>";
+					rplisthtml += "<div class='ms-3"+[i]+"'>";
 					
 					if(grpl == 0){ //모댓글일 시
-						rplisthtml += " <div class='fw-bold parent'>"+creator+"";
+						
+						rplisthtml += "<div class='fw-bold parent rep"+[i]+"'>"+creator+"";
+						rplisthtml += "<span class='wdate'>"+wdate+"</span>";
+						//글작성자만 수정버튼 생성
+						if("${user_name}" == creator){
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-rerep'>답글</span>"
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-update' onclick = rep_update("+[i]+")>수정</span>"
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>삭제</span>"
+						}
 						rplisthtml += "</div>";
-						rplisthtml += ""+content+"";
+						rplisthtml += "<input class='re_content' name='content"+[i]+"' value="+content+" disabled>";
+						rplisthtml += "<div name = 'rep_content_btn"+[i]+"'>";
 						rplisthtml += "</div>";
-
-					}
+						rplisthtml += "</div>";
+						
+					}/* else{ //답글일시} */
+					
 				}
 				
 				//댓글리스트 출력 부분에 받아온 댓글 리스트 넣기.
 				$('.d-flex').html(rplisthtml);
 				
+				
 				$('.form-control').on('click', function(){
 					let replyWriteFormhtml ="";
-					replyWriteFormhtml += "<button type='button' class='btn btn-dark' id='btnrep-submit'>댓글</button>";
-					/* replyWriteFormhtml += "<input class='btn btn-dark' type='submit' value='취소'>"; */
+					replyWriteFormhtml += "<button type='button' class='btn btn-dark repsubmit' id='btnrep-submit'>댓글</button>";
+					replyWriteFormhtml += "<button type='button' class='btn btn-dark repcancel' id='btnrep-cancel'>취소</button>";
 					$('.replyWriteForm').html(replyWriteFormhtml);
 					
+					//댓글 입력 버튼 클릭
 					$('#btnrep-submit').on('click', function() {
 						if($('.form-control').val() == ''){
 							alert("댓글내용을 입력해주세요.");
@@ -138,8 +149,12 @@
  							replyInsert(board_num, board_type, content);
  						}
 					});
+					//댓글 입력 후 취소버튼 클릭 시 폼 원상복구
+					$('#btnrep-cancel').on('click', function() {
+						let replyWriteFormhtml ="";
+						$('.replyWriteForm').html(replyWriteFormhtml);
+					});
 				});
-			
 			},
 			error	: function(xhr, status, error){
 				// 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없기 때문에 error 콜백이 호출될 수 있습니다.
@@ -151,6 +166,17 @@
 			}
 		}); 
 	};
+	
+	 //댓글 수정을 눌렀을 시
+	function rep_update(i) {
+		$("input[name='content"+[i]+"']").attr("disabled", false); //input태그의 이름 중 content[i]번째의 태그 활성화
+		let replyUpdateFormhtml="<div class='btn_update'>";
+		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>취소</span>";
+		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>저장</span>";
+		replyUpdateFormhtml += "</div>"
+		$("div[name='rep_content_btn"+[i]+"']").html(replyUpdateFormhtml);
+	}
+	
 	function replyInsert(board_num, board_type, content) {
 		$.ajax({
 			url : '/board/replyInsert.do',
@@ -158,7 +184,7 @@
 			data : {
 				board_num : board_num,
 				board_type : board_type,
-				content : content,
+				content : content
 			},
 			success	: function(){
 				replyList(board_num, board_type);
@@ -170,6 +196,26 @@
 			complete : function(xhr, status){
 				// success와 error 콜백이 호출된 후에 반드시 호출됩니다.
 				// try - catch - finally의 finally 구문과 동일합니다.
+			}
+		});
+	};
+	
+	//내용 수정 후 저장을 눌렀을때  update 실행
+	function repUpdate(reply_num, board_num, board_type) {
+		$.ajax({
+			url : '/board/replyUpadte.do',
+			type : 'post',
+			data : {
+				reply_num : reply_num,
+				board_num : board_num,
+				board_type : board_type
+			},
+			success	: function(){
+				replyList(board_num, board_type);
+			},
+			error	: function(xhr, status, error){
+				// 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없기 때문에 error 콜백이 호출될 수 있습니다.
+				// 예를 들어, dataType을 지정해서 응답 받을 데이터 형식을 지정하였지만, 서버에서는 다른 데이터형식으로 응답하면  error 콜백이 호출되게 됩니다.
 			}
 		});
 	};

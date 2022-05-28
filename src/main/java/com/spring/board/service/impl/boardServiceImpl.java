@@ -123,4 +123,10 @@ public class boardServiceImpl implements boardService{
 		return boardDao.replyInsert(param);
 	}
 
+	@Override
+	public int replyUpdate(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.replyUpdate(param);
+	}
+
 }

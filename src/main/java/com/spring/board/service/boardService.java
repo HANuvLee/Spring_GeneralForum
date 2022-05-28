@@ -33,5 +33,7 @@ public interface boardService {
 
 	public int replyInsert(Map<String, String> param);
 
+	public int replyUpdate(Map<String, String> param);
+
 
 }
