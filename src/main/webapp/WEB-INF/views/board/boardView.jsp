@@ -111,7 +111,7 @@
 						//글작성자만 수정버튼 생성
 						if("${user_name}" == creator){
 							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-rerep'>답글</span>"
-							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-update' onclick = rep_update("+[i]+")>수정</span>"
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-update' onclick = rep_update("+[i]+","+reply_num+","+board_num+",'"+board_type+"')>수정</span>"
 							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>삭제</span>"
 						}
 						rplisthtml += "</div>";
@@ -126,7 +126,6 @@
 				
 				//댓글리스트 출력 부분에 받아온 댓글 리스트 넣기.
 				$('.d-flex').html(rplisthtml);
-				
 				
 				$('.form-control').on('click', function(){
 					let replyWriteFormhtml ="";
@@ -168,14 +167,41 @@
 	};
 	
 	 //댓글 수정을 눌렀을 시
-	function rep_update(i) {
+	function rep_update(i, reply_num, board_num, board_type){
+		let content = $("input[name='content"+[i]+"']").val();
+
 		$("input[name='content"+[i]+"']").attr("disabled", false); //input태그의 이름 중 content[i]번째의 태그 활성화
 		let replyUpdateFormhtml="<div class='btn_update'>";
-		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>취소</span>";
-		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>저장</span>";
+		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrepCancel'>취소</span>";
+		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrepUpdate'>저장</span>";
 		replyUpdateFormhtml += "</div>"
 		$("div[name='rep_content_btn"+[i]+"']").html(replyUpdateFormhtml);
-	}
+		
+		//댓글 수정 중 취소 시 
+		$('.btnrepCancel').on('click', function(){
+			
+			if(content != $("input[name='content"+[i]+"']").val()){
+				alert("내용 수정중에는 취소할 수 없습니다.");
+				$("input[name='content"+[i]+"']").focus();
+			}else{
+				$("input[name='content"+[i]+"']").attr("disabled", true);
+				let replyUpdateFormhtml = "";
+				$("div[name='rep_content_btn"+[i]+"']").html(replyUpdateFormhtml);
+			}
+			
+		});
+		
+		//댓글 수정 후 저장버튼 클릭 시 
+		$('.btnrepUpdate').on('click', function(){
+			if(content.trim() == $("input[name='content"+[i]+"']").val().trim()){
+				alert('같은 내용은 수정할 수 없습니다.');
+				$("input[name='content"+[i]+"']").focus();
+			}else{
+				let updatedContent = $("input[name='content"+[i]+"']").val();
+				repUpdate(reply_num, board_num, board_type, updatedContent);
+			}
+		});
+	};
 	
 	function replyInsert(board_num, board_type, content) {
 		$.ajax({
@@ -201,14 +227,15 @@
 	};
 	
 	//내용 수정 후 저장을 눌렀을때  update 실행
-	function repUpdate(reply_num, board_num, board_type) {
+	function repUpdate(reply_num, board_num, board_type, content) {
 		$.ajax({
 			url : '/board/replyUpadte.do',
 			type : 'post',
 			data : {
 				reply_num : reply_num,
 				board_num : board_num,
-				board_type : board_type
+				board_type : board_type,
+				content : content
 			},
 			success	: function(){
 				replyList(board_num, board_type);
