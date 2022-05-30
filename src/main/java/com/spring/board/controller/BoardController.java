@@ -207,9 +207,35 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/board/replyUpadte.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/board/replyUpdate.do", method = RequestMethod.POST)
 	public int replyUpdate(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
 		
 		return boardService.replyUpdate(param);
 	}
+	
+	
+	 @ResponseBody
+	 @RequestMapping(value = "/board/replyDelete.do", method = RequestMethod.POST)
+	 public int replyDelete(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
+		 System.out.println("=======deletreply=======");
+		 System.out.println("Map : " + param);
+		 System.out.println("=========================");
+		 
+		 return boardService.replyDelete(param); 
+	 }
+	 
+	 @ResponseBody
+	 @RequestMapping(value = "/board/rereplyInsert.do", method = RequestMethod.POST)
+	 public int rereplyInsert(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
+		 System.out.println("=======rereplyInsert=======");
+		 System.out.println("Map : " + param);
+		 System.out.println("=========================");
+			
+		String user_name = (String)session.getAttribute("user_name");
+		param.put("creator", user_name);
+	
+			
+		 return boardService.rereplyInsert(param); 
+	 }
+	 
 }

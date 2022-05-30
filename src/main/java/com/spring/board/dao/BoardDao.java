@@ -35,4 +35,8 @@ public interface BoardDao {
 
 	public int replyUpdate(Map<String, String> param);
 
+	public int replyDelete(Map<String, String> param);
+
+	public int rereplyInsert(Map<String, String> param);
+
 }

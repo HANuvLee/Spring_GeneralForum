@@ -173,6 +173,7 @@
 	          ,TO_CHAR(SYSDATE)
 	    	)
     </select>
+    
     <update id="replyUpdate"  parameterType="hashmap">
     	update board_reply 
     	set content = #{content} , wdate = TO_CHAR(SYSDATE)
@@ -180,4 +181,37 @@
 		and board_num = #{board_num}
 		and board_type = #{board_type}
     </update>
+    
+    <delete id="replyDelete" parameterType="hashmap">
+    	delete
+    	from board_reply
+    	where reply_num = #{reply_num}
+    	and board_type = #{board_type}
+    </delete>
+    
+    <insert id="rereplyInsert" parameterType="hashmap">
+    	 insert into 
+		    board_reply(
+		        reply_num
+		        ,board_num
+		        ,board_type
+		        ,grp
+		        ,grps
+		        ,grpl
+		        ,creator
+		        ,content
+		        ,wdate
+		    )
+		    values(
+		   	   0
+		      ,#{board_num}
+		      ,#{board_type}
+		      ,#{board_num}
+		      ,0
+		      ,1
+		      ,#{creator}
+		      ,#{content}
+	          ,TO_CHAR(SYSDATE)
+	    	)
+    </insert>
 </mapper>

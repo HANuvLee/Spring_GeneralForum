@@ -98,4 +98,16 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("board.replyUpdate", param);
 	}
+
+	@Override
+	public int replyDelete(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("board.replyDelete", param);
+	}
+
+	@Override
+	public int rereplyInsert(Map<String, String> param) {
+		
+		return sqlSession.insert("board.rereplyInsert", param);
+	}
 }

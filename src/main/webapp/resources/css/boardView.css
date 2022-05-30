@@ -55,5 +55,10 @@
 	margin-left: 10px;
 }
 .btn_update{
-	
+	margin-bottom: 5px;
+	float: right;
+}
+.rereplyInsert span{
+	margin-bottom: 1px;
+	float: right;
 }

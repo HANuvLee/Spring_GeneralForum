@@ -129,4 +129,16 @@ public class boardServiceImpl implements boardService{
 		return boardDao.replyUpdate(param);
 	}
 
+	@Override
+	public int replyDelete(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.replyDelete(param);
+	}
+
+	@Override
+	public int rereplyInsert(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.rereplyInsert(param);
+	}
+
 }

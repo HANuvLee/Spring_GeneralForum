@@ -110,9 +110,9 @@
 						rplisthtml += "<span class='wdate'>"+wdate+"</span>";
 						//글작성자만 수정버튼 생성
 						if("${user_name}" == creator){
-							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-rerep'>답글</span>"
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-rerep' onclick = rerep_insert("+[i]+","+reply_num+","+board_num+",'"+board_type+"')>답글</span>"
 							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-update' onclick = rep_update("+[i]+","+reply_num+","+board_num+",'"+board_type+"')>수정</span>"
-							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-delete'>삭제</span>"
+							rplisthtml += "<span type='button' style='cursor:pointer' class='btnrep-delete' onclick = rep_delete("+[i]+","+reply_num+","+board_num+",'"+board_type+"')>삭제</span>"
 						}
 						rplisthtml += "</div>";
 						rplisthtml += "<input class='re_content' name='content"+[i]+"' value="+content+" disabled>";
@@ -146,6 +146,7 @@
 						}else{
 							content = $('.form-control').val();
  							replyInsert(board_num, board_type, content);
+ 							$('.form-control').val("");
  						}
 					});
 					//댓글 입력 후 취소버튼 클릭 시 폼 원상복구
@@ -168,25 +169,24 @@
 	
 	 //댓글 수정을 눌렀을 시
 	function rep_update(i, reply_num, board_num, board_type){
+		$("div[name='rep_content_btn"+[i]+"']").html("");
 		let content = $("input[name='content"+[i]+"']").val();
 
 		$("input[name='content"+[i]+"']").attr("disabled", false); //input태그의 이름 중 content[i]번째의 태그 활성화
 		let replyUpdateFormhtml="<div class='btn_update'>";
 		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrepCancel'>취소</span>";
 		replyUpdateFormhtml += "<span type='button' style='cursor:pointer' class='btnrepUpdate'>저장</span>";
-		replyUpdateFormhtml += "</div>"
+		replyUpdateFormhtml += "</div>";
 		$("div[name='rep_content_btn"+[i]+"']").html(replyUpdateFormhtml);
 		
 		//댓글 수정 중 취소 시 
 		$('.btnrepCancel').on('click', function(){
-			
 			if(content != $("input[name='content"+[i]+"']").val()){
 				alert("내용 수정중에는 취소할 수 없습니다.");
 				$("input[name='content"+[i]+"']").focus();
 			}else{
 				$("input[name='content"+[i]+"']").attr("disabled", true);
-				let replyUpdateFormhtml = "";
-				$("div[name='rep_content_btn"+[i]+"']").html(replyUpdateFormhtml);
+				$("div[name='rep_content_btn"+[i]+"']").html("");
 			}
 			
 		});
@@ -203,6 +203,51 @@
 		});
 	};
 	
+	//댓글 삭제 버튼 클릭 시
+ 	function rep_delete(i, reply_num, board_num, board_type) {
+		repDelete(reply_num, board_num, board_type);
+	};
+	
+	
+	//답글 버튼 클릭시
+	function rerep_insert(i, reply_num, board_num, board_type) {
+		$("input[name='content"+[i]+"']").attr("disabled", true);
+		$("div[name='rep_content_btn"+[i]+"']").html("");
+		
+		let rereplyWriteFormhtml ="<div class='rereplyInsert'>";
+		rereplyWriteFormhtml += "<input class='form-control' id='rereply_content' rows='1' placeholder='답글입력...'>";
+		rereplyWriteFormhtml += "<span type='button' style='cursor:pointer' class='btnrerepInsert'>답글</span>";
+		rereplyWriteFormhtml += "<span type='button' style='cursor:pointer' class='btnrerepCancel'>취소</span>";
+		rereplyWriteFormhtml += "</div>";
+		
+		$("div[name='rep_content_btn"+[i]+"']").html(rereplyWriteFormhtml);
+		
+		//답글 취소 시 
+		$('.btnrerepCancel').on('click', function(){
+			if($('#rereply_content').val() != ""){
+				alert("답글 입력중에는 취소할 수 없습니다.");
+				$('#rereply_content').focus();
+			}else{
+				$("div[name='rep_content_btn"+[i]+"']").html("");
+			}
+			
+		});
+		
+		//답글 입력 후 저장버튼 클릭 시 
+		$('.btnrerepInsert').on('click', function(){
+			if($('#rereply_content').val().trim() == ""){
+				alert('답글 내용을 작성해주세요.');
+				$('#rereply_content').focus();
+			}else{
+				let rereplyContent = $('#rereply_content').val();
+				rerepInsert(reply_num, board_num, board_type, rereplyContent);
+			}
+		});
+	};
+	
+
+/******************************************************************비동기 함수 호출******************************************************************/
+	//댓글 작성 함수
 	function replyInsert(board_num, board_type, content) {
 		$.ajax({
 			url : '/board/replyInsert.do',
@@ -229,7 +274,7 @@
 	//내용 수정 후 저장을 눌렀을때  update 실행
 	function repUpdate(reply_num, board_num, board_type, content) {
 		$.ajax({
-			url : '/board/replyUpadte.do',
+			url : '/board/replyUpdate.do',
 			type : 'post',
 			data : {
 				reply_num : reply_num,
@@ -246,5 +291,44 @@
 			}
 		});
 	};
+	//댓글 삭제 메소드
+ 	function repDelete(reply_num, board_num, board_type) {
+		$.ajax({
+			url : '/board/replyDelete.do',
+			type : 'post',
+			data : {
+				reply_num : reply_num,
+				board_type : board_type
+			},
+			success	: function(){
+				replyList(board_num, board_type);
+			},
+			error	: function(xhr, status, error){
+				// 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없기 때문에 error 콜백이 호출될 수 있습니다.
+				// 예를 들어, dataType을 지정해서 응답 받을 데이터 형식을 지정하였지만, 서버에서는 다른 데이터형식으로 응답하면  error 콜백이 호출되게 됩니다.
+			}
+		});
+	}
+	
+	//답글 입력 메소드
+	function rerepInsert(reply_num, board_num, board_type, content) {
+		$.ajax({
+			url : '/board/rereplyInsert.do',
+			type : 'post',
+			data : {
+				reply_num : reply_num,
+				board_num : board_num,
+				board_type : board_type,
+				content : content
+			},
+			success	: function(){
+				replyList(board_num, board_type);
+			},
+			error	: function(xhr, status, error){
+				// 응답을 받지 못하였다거나 정상적인 응답이지만 데이터 형식을 확인할 수 없기 때문에 error 콜백이 호출될 수 있습니다.
+				// 예를 들어, dataType을 지정해서 응답 받을 데이터 형식을 지정하였지만, 서버에서는 다른 데이터형식으로 응답하면  error 콜백이 호출되게 됩니다.
+			}
+		});
+	}
 </script>
 </html>
