@@ -81,33 +81,4 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.insert("join", user_infoVo);
 	}
 
-	@Override
-	public List<ReplyVo> replyList(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("board.replyListSelect", param);
-	}
-
-	@Override
-	public int replyInsert(Map<String, String> param) {
-			
-		return sqlSession.insert("board.replyInsert", param);
-	}
-
-	@Override
-	public int replyUpdate(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return sqlSession.update("board.replyUpdate", param);
-	}
-
-	@Override
-	public int replyDelete(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return sqlSession.delete("board.replyDelete", param);
-	}
-
-	@Override
-	public int rereplyInsert(Map<String, String> param) {
-		
-		return sqlSession.insert("board.rereplyInsert", param);
-	}
 }

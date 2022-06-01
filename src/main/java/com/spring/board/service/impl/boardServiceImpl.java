@@ -110,35 +110,4 @@ public class boardServiceImpl implements boardService{
 		return boardDao.join(user_infoVo);
 	}
 
-	
-	@Override
-	public List<ReplyVo> replyList(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return boardDao.replyList(param);
-	}
-
-	@Override
-	public int replyInsert(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return boardDao.replyInsert(param);
-	}
-
-	@Override
-	public int replyUpdate(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return boardDao.replyUpdate(param);
-	}
-
-	@Override
-	public int replyDelete(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return boardDao.replyDelete(param);
-	}
-
-	@Override
-	public int rereplyInsert(Map<String, String> param) {
-		// TODO Auto-generated method stub
-		return boardDao.rereplyInsert(param);
-	}
-
 }

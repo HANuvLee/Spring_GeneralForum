@@ -1,15 +1,18 @@
 package com.spring.board.vo;
 
 public class ReplyVo {
-	private int reply_num;
-	private int board_num;
-	private String board_type;
-	private int grp;
-	private int grps;
-	private int grpl;
-	private String creator;
-	private String content;
-	private String wdate;
+	private int reply_num; //댓글번호, 댓글seq
+	private int board_num; //게시글 번호
+	private String board_type; //게시글 유형
+	private int grp; //부모인지 자식인지 (댓글 = 0, 답글 = 1)
+	private int grps; //부모가 누구인지 (NULL or reply_num) 
+	private String creator; //작성자
+	private String content; //내용
+	private String wdate; //작성일
+	
+	//조회용
+	private int childCount;//댓글리스트 조회 시 부모댓글의 답글 개수 표시를 위해 사용
+	
 	
 	public int getReply_num() {
 		return reply_num;
@@ -40,12 +43,6 @@ public class ReplyVo {
 	}
 	public void setGrps(int grps) {
 		this.grps = grps;
-	}
-	public int getGrpl() {
-		return grpl;
-	}
-	public void setGrpl(int grpl) {
-		this.grpl = grpl;
 	}
 	public String getCreator() {
 		return creator;

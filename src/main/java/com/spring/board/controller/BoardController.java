@@ -178,64 +178,6 @@ public class BoardController {
 		
 		return "redirect:/login/Login.do";
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/board/replyList.do", method = RequestMethod.GET)
-	public List<ReplyVo> replyList(@RequestParam String board_num, @RequestParam String board_type)throws Exception{
-		
-		Map<String, String> param = new HashMap<>();
-		param.put("board_num", board_num);
-		param.put("board_type", board_type);
-		
-		List<ReplyVo> replyList = new ArrayList<>();
-		replyList = boardService.replyList(param);
-		
-		return replyList;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/board/replyInsert.do", method = RequestMethod.POST)
-	public int replyInsert(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
-		
-		int replyInsert = 0;
-		
-		String user_name = (String)session.getAttribute("user_name");
-		param.put("creator", user_name);
-		replyInsert = boardService.replyInsert(param);
-		
-		return replyInsert;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/board/replyUpdate.do", method = RequestMethod.POST)
-	public int replyUpdate(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
-		
-		return boardService.replyUpdate(param);
-	}
-	
-	
-	 @ResponseBody
-	 @RequestMapping(value = "/board/replyDelete.do", method = RequestMethod.POST)
-	 public int replyDelete(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
-		 System.out.println("=======deletreply=======");
-		 System.out.println("Map : " + param);
-		 System.out.println("=========================");
-		 
-		 return boardService.replyDelete(param); 
-	 }
-	 
-	 @ResponseBody
-	 @RequestMapping(value = "/board/rereplyInsert.do", method = RequestMethod.POST)
-	 public int rereplyInsert(@RequestParam Map<String, String> param, HttpSession session)throws Exception{
-		 System.out.println("=======rereplyInsert=======");
-		 System.out.println("Map : " + param);
-		 System.out.println("=========================");
-			
-		String user_name = (String)session.getAttribute("user_name");
-		param.put("creator", user_name);
-	
-			
-		 return boardService.rereplyInsert(param); 
-	 }
+
 	 
 }
