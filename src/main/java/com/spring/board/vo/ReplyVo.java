@@ -7,11 +7,12 @@ public class ReplyVo {
 	private int grp; //부모인지 자식인지 (댓글 = 0, 답글 = 1)
 	private int grps; //부모가 누구인지 (NULL or reply_num) 
 	private String creator; //작성자
-	private String content; //내용
+	private String cont; //내용
 	private String wdate; //작성일
 	
 	//조회용
-	private int childCount;//댓글리스트 조회 시 부모댓글의 답글 개수 표시를 위해 사용
+	private int rownum; //댓글 리스트 일련번호
+	private int childCnt;//댓글리스트 조회 시 부모댓글의 답글 개수 표시를 위해 사용
 	
 	
 	public int getReply_num() {
@@ -50,17 +51,29 @@ public class ReplyVo {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public String getContent() {
-		return content;
+	public String getCont() {
+		return cont;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setCont(String cont) {
+		this.cont = cont;
 	}
 	public String getWdate() {
 		return wdate;
 	}
 	public void setWdate(String wdate) {
 		this.wdate = wdate;
+	}
+	public int getChildCnt() {
+		return childCnt;
+	}
+	public void setChildCnt(int childCnt) {
+		this.childCnt = childCnt;
+	}
+	public int getRownum() {
+		return rownum;
+	}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 	
 }

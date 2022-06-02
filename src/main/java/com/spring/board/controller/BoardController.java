@@ -77,15 +77,10 @@ public class BoardController {
 		String user_id = (String)session.getAttribute("user_id");
 		String user_name = (String)session.getAttribute("user_name");
 		
-//		if(user_id == null) {
-//			return "redirect:/login/Login.do";
-//		}
 		BoardVo boardVo = new BoardVo();
 		
 		boardVo = boardService.selectBoard(boardType,boardNum);
-		
-		model.addAttribute("boardType", boardType);
-		model.addAttribute("boardNum", boardNum);
+	
 		model.addAttribute("board", boardVo);
 		
 		return "board/boardView";
@@ -178,6 +173,16 @@ public class BoardController {
 		
 		return "redirect:/login/Login.do";
 	}
-
-	 
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyList.do", method = RequestMethod.GET)
+	public List<ReplyVo> replyList(@RequestParam Map<String, String> param) throws Exception {
+		List<ReplyVo> replyList = boardService.replyList(param);
+		
+		for(int i = 0; i<replyList.size(); i++) {
+			int childCnt = boardService.repChildCnt(replyList.get(i).getReply_num());
+			replyList.get(i).setChildCnt(childCnt);
+		}
+		return replyList;
+	}
 }

@@ -39,8 +39,89 @@
 			<a href="/board/boardUpdate.do?board_type=${board.board_type}&board_num=${board.board_num}">Update</a>
 		</c:if>
 	</div>
+	<form class="mb-4">
+		<input type="hidden" name="board_num" value="${board.board_num}">
+		<input type="hidden" name="board_type" value="${board.board_type}">
+		<textarea class="form-control replyInsertForm" rows="1" placeholder="Join the discussion and leave a comment!"></textarea>
+		<div class="replyBtn" style="display: none;">
+			<span class="btn btn-dark replyBtnCancel">취소</span>
+			<span class="btn btn-link replyBtnInsert" onclick="replyInsert()">댓글</span>
+		</div>
+	</form>
+	<div class="repWrapper">
+		 <hr class="repline">
+		<div class="repheader">
+			리오넬메시 22/05/30
+		</div>
+		<div class="repbody">
+			jkdhsakjdhashdjkashkdhasjkdhjkashdjkashjkdhasjkhdjkashdjkhaskjhdjkashdjkhasjkdhasjkhdkjashjkdhsa
+		</div>
+		<div class="repBtn">
+			<div class="rerepCnt">답글12개보기</div>
+			<span class= "btn btn-dark repDeleteBtn">삭제</span>
+			<span class= "btn btn-link repUpdateBtn">수정</span>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
+	$(function(){
+		replyList(${board.board_num}, '${board.board_type}');
+	});
+
+	function replyList(board_num, board_type) {
+		$.ajax({
+			url : '/board/replyList.do',
+			type : 'get',
+			data : {
+				board_num : board_num,
+				board_type : board_type
+			},
+			success:function(res){
+				let rephtml = "";
+				for(let i in res){
+					rephtml += "<div class= 'reptable'>";
+					rephtml += "<hr class='repline'>";
+					rephtml += "<div class='repheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
+					rephtml += "<div class='repbody'>"+res[i].cont+"</div>";
+					rephtml += "<div class='repBtn'>";
+					if(res[i].childCnt != 0){
+						rephtml += "<div class='rerepCnt'>답글"+res[i].childCnt+"개보기</div>";	
+					}	
+					rephtml += "<span class= 'btn btn-dark repDeleteBtn'>삭제</span>";
+					rephtml += "<span class= 'btn btn-link repUpdateBtn'>수정</span>";
+					rephtml += "</div>";
+				}
+				$('.repWrapper').html(rephtml);
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.");
+            }
+		});
+	};
+	
+
+	function replyInsert() {
+		$.ajax({
+			
+		});
+	}
+
+	//댓글 입력 시 버튼 추가
+	$('.replyInsertForm').click(function() {
+		if($('.replyBtn').css('display') == 'none') {
+            $('.replyBtn').css('display', 'block');
+        }
+	});
+	
+	//댓글 입력 중 취소 시
+	$('.replyBtnCancel').click(function() {
+		$('.replyInsertForm').val("");
+		$('.replyBtn').css('display', 'none');
+	});
+	
+	
+	
+	
 	
 </script>
 </html>

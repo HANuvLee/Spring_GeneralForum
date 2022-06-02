@@ -29,5 +29,8 @@ public interface BoardDao {
 
 	public int join(User_infoVo user_infoVo) throws Exception;
 
+	public List<ReplyVo> replyList(Map<String, String> param);
+
+	public int repChildCnt(int reply_num);
 
 }

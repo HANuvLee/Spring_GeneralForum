@@ -81,4 +81,16 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.insert("join", user_infoVo);
 	}
 
+	@Override
+	public List<ReplyVo> replyList(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("board.replyList", param);
+	}
+
+	@Override
+	public int repChildCnt(int reply_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("board.repChildCnt", reply_num);
+	}
+
 }

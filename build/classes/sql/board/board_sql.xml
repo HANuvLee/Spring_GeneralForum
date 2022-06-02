@@ -133,5 +133,26 @@
 			,TO_CHAR(SYSDATE)
 			)
     </select>
-   
+    
+    <select id="replyList" parameterType="map" resultType="com.spring.board.vo.ReplyVo">
+    	select rownum, b.*
+		from(select reply_num
+	            , grp
+	            , grps
+	            , creator
+	            , cont
+	            , wdate  
+		     from board_reply
+	         where board_num = #{board_num}
+	         and board_type = #{board_type}
+	         and grp = 0
+	         order by wdate desc)b
+    </select>
+    
+    <select id="repChildCnt" parameterType="int" resultType="int">
+    	select count(*)
+		from board_reply
+		where grp = 1
+		and grps = #{reply_num}
+    </select>
 </mapper>

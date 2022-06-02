@@ -17,48 +17,38 @@
 	width: 555px
 	
 }
-.parent{
-	margin-top: 5px;
-}
 .replyWriteForm{
 	margin-left: 798px;
 }
 .form-control{
 	margin-top: 10px;
 }
-.repcancel{
-	margin-top: 5px;
-	margin-left: 10px;
-	padding-bottom: 2px;
-	padding-top: 2px;
-	border-bottom-width: 1px;
+.replyBtn{
+	text-align: right;
 }
-.repsubmit{
-	margin-top: 5px;
-	padding-bottom: 2px;
-	padding-top: 2px;
-	border-bottom-width: 1px;
-}
-.re_content{
-	word-break:break-all;
+.repWrapper{
 	position:relative;
 	margin:0 auto 0;
-	width: 555px
+	width: 555px;
 }
-.btnrep-rerep{
-	margin-left: 350px;
-}
-.btnrep-update{
-	margin-left: 10px;
-}
-.btnrep-delete{
-	margin-left: 10px;
-}
-.btn_update{
+.repline{
+	margin-top: 15px;
 	margin-bottom: 5px;
-	float: right;
 }
-.rereplyInsert span{
-	margin-bottom: 1px;
-	float: right;
+.repheader{
+	width: 555px;
 }
+.repbody{
+	word-break:break-all;
+}
+.repBtn{
+	position : relative;
+	text-align: right;
+}
+.rerepCnt{
+	position: absolute;
+	text-align: left;
+	padding-top: 7px;
+	padding-left: 10px;
+}
+
