@@ -122,4 +122,16 @@ public class boardServiceImpl implements boardService{
 		return boardDao.repChildCnt(reply_num);
 	}
 
+	@Override
+	public int replyInsert(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.replyInsert(param);
+	}
+
+	@Override
+	public List<ReplyVo> rereplyList(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		return boardDao.rereplyList(param);
+	}
+
 }

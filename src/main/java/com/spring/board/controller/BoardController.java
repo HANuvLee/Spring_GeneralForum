@@ -72,11 +72,7 @@ public class BoardController {
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardView.do", method = RequestMethod.GET)
 	public String boardView(Model model, HttpSession session
 			,@PathVariable("boardType")String boardType
-			,@PathVariable("boardNum")int boardNum) throws Exception{
-		
-		String user_id = (String)session.getAttribute("user_id");
-		String user_name = (String)session.getAttribute("user_name");
-		
+			,@PathVariable("boardNum")int boardNum) throws Exception{	
 		BoardVo boardVo = new BoardVo();
 		
 		boardVo = boardService.selectBoard(boardType,boardNum);
@@ -184,5 +180,24 @@ public class BoardController {
 			replyList.get(i).setChildCnt(childCnt);
 		}
 		return replyList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyInsert.do", method = RequestMethod.POST)
+	public int replyInsert(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		String user_name = (String)session.getAttribute("user_name");
+		param.put("creator", user_name);
+		System.out.println(param);
+		int chk = boardService.replyInsert(param);
+		return chk;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/rereplyList.do", method = RequestMethod.GET)
+	public List<ReplyVo> rereplyList(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		System.out.println(param);
+		List<ReplyVo> rereplyList = boardService.rereplyList(param);
+		
+		return rereplyList;
 	}
 }

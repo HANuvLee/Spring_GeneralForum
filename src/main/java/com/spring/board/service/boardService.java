@@ -33,4 +33,8 @@ public interface boardService {
 
 	public int repChildCnt(int reply_num);
 
+	public int replyInsert(Map<String, String> param);
+
+	public List<ReplyVo> rereplyList(Map<String, String> param);
+
 }

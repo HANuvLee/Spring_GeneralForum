@@ -62,12 +62,25 @@
 			<span class= "btn btn-link repUpdateBtn">수정</span>
 		</div>
 	</div>
+	<div class="rerepWrapper">
+		<div class="repheader">
+			리오넬메시 22/05/30
+		</div>
+		<div class="rerepbody">
+			jkdhsakjdhashdjkashkdhasjkdhjkashdjkashjkdhasjkhdjkashdjkhaskjhdjkashdjkhasjkdhasjkhdkjashjkdhsa
+		</div>
+		<div class="rerepBtn">
+			<span class= "btn btn-dark repDeleteBtn">삭제</span>
+			<span class= "btn btn-link repUpdateBtn">수정</span>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 	$(function(){
 		replyList(${board.board_num}, '${board.board_type}');
 	});
-
+	
+	//댓글 리스트 조회
 	function replyList(board_num, board_type) {
 		$.ajax({
 			url : '/board/replyList.do',
@@ -84,28 +97,83 @@
 					rephtml += "<div class='repheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
 					rephtml += "<div class='repbody'>"+res[i].cont+"</div>";
 					rephtml += "<div class='repBtn'>";
-					if(res[i].childCnt != 0){
-						rephtml += "<div class='rerepCnt'>답글"+res[i].childCnt+"개보기</div>";	
-					}	
+					rephtml += "<div class='rerepCnt' reply_num="+res[i].reply_num+">답글"+res[i].childCnt+"개보기</div>";	
+					/* if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
 					rephtml += "<span class= 'btn btn-dark repDeleteBtn'>삭제</span>";
 					rephtml += "<span class= 'btn btn-link repUpdateBtn'>수정</span>";
+					/* } */
+					rephtml += "<div class='rerepWrapper' grs="+res[i].reply_num+">";
+					rephtml += "</div>";
 					rephtml += "</div>";
 				}
 				$('.repWrapper').html(rephtml);
+				
+				//답글 버튼 클릭 시 답글 리스틀 조회하는 ajax호출
+				$('.rerepCnt').click(function() {
+					let reply_num = ($(this).attr('reply_num'));
+					$.ajax({
+						url : '/board/rereplyList.do',
+						type : 'get',
+						data : {
+							board_num : board_num, 
+							board_type : board_type,
+							reply_num : reply_num
+						},
+						success:function(res){
+							rerephtml = "";
+							for(let i in res){
+								rerephtml += "<div class='rereptable'>";
+								rerephtml += "<div class='rerepheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
+								rerephtml += "<div class='rerepbody'>"+res[i].cont+"</div>";
+								rerephtml += "<div class='rerepBtn'>";
+								/* if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
+								rerephtml += "<span class= 'btn btn-dark rerepDeleteBtn'>삭제</span>";
+								rerephtml += "<span class= 'btn btn-link rerepUpdateBtn'>수정</span>";
+								/* } */
+								rerephtml += "</div>";
+							}
+							$('div[grs='+reply_num+']').html(rerephtml);
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+			                alert("통신 실패.");
+			        	}
+					});
+				});
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
                     alert("통신 실패.");
             }
 		});
 	};
+	//댓글 입력 
+	function replyInsert() {	
+		if($('.replyInsertForm').val().trim() == ""){
+			alert("빈 댓글내용은 저장이 불가합니다.");
+		}else{
+			let cont = $('.replyInsertForm').val();
+			$.ajax({
+				url : '/board/replyInsert.do',
+				type : 'post',
+				data : {
+					board_num : ${board.board_num}, 
+					board_type :'${board.board_type}',
+					cont : cont
+				},
+				success:function(){
+					replyList(${board.board_num}, '${board.board_type}');
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.");
+            	}
+			});
+		};
+	};
 	
-
-	function replyInsert() {
-		$.ajax({
-			
-		});
-	}
-
+	//답글 조회
+	function rereplySelect(board_num, board_type, reply_num) {
+	
+	};
+	
 	//댓글 입력 시 버튼 추가
 	$('.replyInsertForm').click(function() {
 		if($('.replyBtn').css('display') == 'none') {
@@ -118,10 +186,5 @@
 		$('.replyInsertForm').val("");
 		$('.replyBtn').css('display', 'none');
 	});
-	
-	
-	
-	
-	
 </script>
 </html>

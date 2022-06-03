@@ -50,5 +50,20 @@
 	text-align: left;
 	padding-top: 7px;
 	padding-left: 10px;
+	color: #337ab7;
+	cursor:pointer;
+}
+.rerepWrapper{
+	position: relative;
+}
+.reprepheader{
+	width: 555px;
+}
+.rerepbody{
+	word-break:break-all;
 }
 
+.rerepBtn{
+	position : relative;
+	text-align: right;
+}
