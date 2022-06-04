@@ -200,4 +200,13 @@ public class BoardController {
 		
 		return rereplyList;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyUpdate.do", method = RequestMethod.POST)
+	public int replyUpdate(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		System.out.println(param);
+		int replyUpdateChk = boardService.replyUpdate(param);
+
+		return replyUpdateChk;
+	}
 }

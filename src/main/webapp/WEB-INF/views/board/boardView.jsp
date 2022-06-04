@@ -40,8 +40,6 @@
 		</c:if>
 	</div>
 	<form class="mb-4">
-		<input type="hidden" name="board_num" value="${board.board_num}">
-		<input type="hidden" name="board_type" value="${board.board_type}">
 		<textarea class="form-control replyInsertForm" rows="1" placeholder="Join the discussion and leave a comment!"></textarea>
 		<div class="replyBtn" style="display: none;">
 			<span class="btn btn-dark replyBtnCancel">취소</span>
@@ -49,30 +47,7 @@
 		</div>
 	</form>
 	<div class="repWrapper">
-		 <hr class="repline">
-		<div class="repheader">
-			리오넬메시 22/05/30
-		</div>
-		<div class="repbody">
-			jkdhsakjdhashdjkashkdhasjkdhjkashdjkashjkdhasjkhdjkashdjkhaskjhdjkashdjkhasjkdhasjkhdkjashjkdhsa
-		</div>
-		<div class="repBtn">
-			<div class="rerepCnt">답글12개보기</div>
-			<span class= "btn btn-dark repDeleteBtn">삭제</span>
-			<span class= "btn btn-link repUpdateBtn">수정</span>
-		</div>
-	</div>
-	<div class="rerepWrapper">
-		<div class="repheader">
-			리오넬메시 22/05/30
-		</div>
-		<div class="rerepbody">
-			jkdhsakjdhashdjkashkdhasjkdhjkashdjkashjkdhasjkhdjkashdjkhaskjhdjkashdjkhasjkdhasjkhdkjashjkdhsa
-		</div>
-		<div class="rerepBtn">
-			<span class= "btn btn-dark repDeleteBtn">삭제</span>
-			<span class= "btn btn-link repUpdateBtn">수정</span>
-		</div>
+		<!--동적으로 댓글 리스트가 들어간다. -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -92,17 +67,20 @@
 			success:function(res){
 				let rephtml = "";
 				for(let i in res){
-					rephtml += "<div class= 'reptable'>";
 					rephtml += "<hr class='repline'>";
+					rephtml += "<div class= 'reptable'>";
 					rephtml += "<div class='repheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
 					rephtml += "<div class='repbody'>"+res[i].cont+"</div>";
 					rephtml += "<div class='repBtn'>";
 					rephtml += "<div class='rerepCnt' reply_num="+res[i].reply_num+">답글"+res[i].childCnt+"개보기</div>";	
-					/* if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
-					rephtml += "<span class= 'btn btn-dark repDeleteBtn'>삭제</span>";
-					rephtml += "<span class= 'btn btn-link repUpdateBtn'>수정</span>";
-					/* } */
-					rephtml += "<div class='rerepWrapper' grs="+res[i].reply_num+">";
+					if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
+						rephtml += "<span class= 'btn btn-dark repDeleteBtn'>삭제</span>";
+						rephtml += "<span class= 'btn btn-link repUpdateBtn' reply_num="+res[i].reply_num+">수정</span>";
+						rephtml += "<div class='repUpdateForm' repUpdatFormno="+res[i].reply_num+">";
+						rephtml += "</div>";
+					 }
+					rephtml += "</div>";
+					rephtml += "<div class='rerepWrapper' reply_num="+res[i].reply_num+">";
 					rephtml += "</div>";
 					rephtml += "</div>";
 				}
@@ -131,6 +109,7 @@
 								rerephtml += "<span class= 'btn btn-link rerepUpdateBtn'>수정</span>";
 								/* } */
 								rerephtml += "</div>";
+								rerephtml += "</div>";
 							}
 							$('div[grs='+reply_num+']').html(rerephtml);
 						},
@@ -139,12 +118,49 @@
 			        	}
 					});
 				});
+				
+				//댓글 수정 버튼 클릭 시 수정폼 밋 버튼 생성
+				$('.repUpdateBtn').click(function(){
+					let reply_num = ($(this).attr('reply_num'));
+					let repUpdateForm = "";
+						repUpdateForm += "<textarea class='form-control replyUpdateForm' rows='1'></textarea>";
+						repUpdateForm += "<div class='replyUpdateBtn'>";
+						repUpdateForm += "<span class='btn btn-dark replyUpdateCancel'>취소</span>"
+						repUpdateForm += "<span class='btn btn-link replyUpdateBtn' onclick='replyUpdate("+reply_num+")'>수정</span>";
+						repUpdateForm += "</div>";
+					$('div[repUpdatFormno='+reply_num+']').html(repUpdateForm);
+				});
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
                     alert("통신 실패.");
             }
 		});
 	};
+	//댓글 수정
+	function replyUpdate(reply_num) {
+		if($('.replyUpdateForm').val().trim() == ""){
+			alert("빈 댓글내용은 저장이 불가합니다.");
+		}else{
+			let cont = $('.replyUpdateForm').val();
+			$.ajax({
+				url : '/board/replyUpdate.do',
+				type : 'post',
+				data : {
+					board_num : ${board.board_num}, 
+					board_type :'${board.board_type}',
+					reply_num : reply_num,
+					cont : cont
+				},
+				success:function(){
+					replyList(${board.board_num}, '${board.board_type}');
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.");
+            	}
+			});
+		};
+	};
+	
 	//댓글 입력 
 	function replyInsert() {	
 		if($('.replyInsertForm').val().trim() == ""){
@@ -168,12 +184,6 @@
 			});
 		};
 	};
-	
-	//답글 조회
-	function rereplySelect(board_num, board_type, reply_num) {
-	
-	};
-	
 	//댓글 입력 시 버튼 추가
 	$('.replyInsertForm').click(function() {
 		if($('.replyBtn').css('display') == 'none') {

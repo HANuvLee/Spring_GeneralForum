@@ -37,4 +37,6 @@ public interface boardService {
 
 	public List<ReplyVo> rereplyList(Map<String, String> param);
 
+	public int replyUpdate(Map<String, String> param);
+
 }

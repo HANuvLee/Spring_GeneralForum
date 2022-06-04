@@ -37,16 +37,17 @@
 }
 .repheader{
 	width: 555px;
+	position: static;
 }
 .repbody{
 	word-break:break-all;
 }
 .repBtn{
 	position : relative;
+	height: 40px;
 	text-align: right;
 }
 .rerepCnt{
-	position: absolute;
 	text-align: left;
 	padding-top: 7px;
 	padding-left: 10px;
@@ -55,6 +56,7 @@
 }
 .rerepWrapper{
 	position: relative;
+	width: 555px;
 }
 .reprepheader{
 	width: 555px;
@@ -62,8 +64,20 @@
 .rerepbody{
 	word-break:break-all;
 }
+.rereptable{
+	margin-left:10px;
+	position : relative;
+}
 
 .rerepBtn{
 	position : relative;
 	text-align: right;
+}
+.repUpdateForm{
+	position:relative;
+	margin:0 auto 0;
+	width: 555px;
+}
+.replyUpdateBtn{
+	margin-top: 40px;
 }
