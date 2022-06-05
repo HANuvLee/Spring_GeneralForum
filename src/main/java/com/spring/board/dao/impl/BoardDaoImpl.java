@@ -82,33 +82,57 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<ReplyVo> replyList(Map<String, String> param) {
+	public List<ReplyVo> replyList(Map<String, String> param) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.replyList", param);
 	}
 
 	@Override
-	public int repChildCnt(int reply_num) {
+	public int repChildCnt(int reply_num) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.repChildCnt", reply_num);
 	}
 
 	@Override
-	public int replyInsert(Map<String, String> param) {
+	public int replyInsert(Map<String, String> param) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("board.replyInsert", param);
 	}
 
 	@Override
-	public List<ReplyVo> rereplyList(Map<String, String> param) {
+	public List<ReplyVo> rereplyList(Map<String, String> param) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.rereplyList", param);
 	}
 
 	@Override
-	public int replyUpdate(Map<String, String> param) {
+	public int replyUpdate(Map<String, String> param) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.update("board.replyUpdate", param);
+	}
+
+	@Override
+	public int replyDelete(Map<String, String> param) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("board.replyDelete",param);
+	}
+
+	@Override
+	public int rereplyInsert(Map<String, String> param) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("board.rereplyInsert", param);
+	}
+	
+	@Override
+	public int rereplyUpdate(Map<String, String> param) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("board.rereplyUpdate", param);
+	}
+
+	@Override
+	public int rereplyDelete(Map<String, String> param) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("board.rereplyDelete", param);
 	}
 
 }

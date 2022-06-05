@@ -146,7 +146,7 @@
 	         where board_num = #{board_num}
 	         and board_type = #{board_type}
 	         and grp = 0
-	         order by wdate desc)b
+	         order by reply_num desc)b
     </select>
     
     <select id="repChildCnt" parameterType="int" resultType="int">
@@ -188,6 +188,39 @@
 			and reply_num =#{reply_num}
     </update>
     
+    <delete id="replyDelete" parameterType="map">
+    	delete
+		from board_reply
+		where board_num = #{board_num}
+		and board_type = #{board_type}
+		and reply_num = #{reply_num}
+    </delete>
+    
+    <insert id="rereplyInsert" parameterType="map">
+    	insert into board_reply(
+	    reply_num
+	    ,board_num
+	    ,board_type
+	    ,grp
+	    ,grps
+	    ,creator
+	    ,cont
+	    ,wdate
+	)
+    values(
+	    (SELECT TO_NUMBER(NVL(MAX(reply_num), 0) + 1)
+		 FROM BOARD_REPLY
+		 WHERE BOARD_TYPE = #{board_type})
+	    ,#{board_num}
+	    ,#{board_type}
+	    ,1
+	    ,#{reply_num}
+	    ,#{creator}
+	    ,#{cont}
+	    ,TO_CHAR(SYSDATE)
+	)
+    </insert>
+    
     <select id="rereplyList" parameterType="map" resultType="com.spring.board.vo.ReplyVo">
     	select rownum, b.*
 		from(select reply_num
@@ -201,6 +234,21 @@
 	         and board_type = #{board_type}
 	         and grp = 1
              and grps = #{reply_num}
-	         order by wdate desc)b
+	         order by reply_num desc)b
     </select>
+    
+    <update id="rereplyUpdate" parameterType="map">
+    	update board_reply set cont = #{cont}
+			where board_num = #{board_num}
+			and board_type = #{board_type}
+			and reply_num =#{reply_num}
+    </update>
+    
+    <delete id="rereplyDelete" parameterType="map">
+    	delete
+		from board_reply
+		where board_num = #{board_num}
+		and board_type = #{board_type}
+		and reply_num = #{reply_num}
+    </delete>
 </mapper>

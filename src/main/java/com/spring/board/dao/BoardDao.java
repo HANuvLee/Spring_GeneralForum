@@ -29,14 +29,22 @@ public interface BoardDao {
 
 	public int join(User_infoVo user_infoVo) throws Exception;
 
-	public List<ReplyVo> replyList(Map<String, String> param);
+	public List<ReplyVo> replyList(Map<String, String> param) throws Exception;
 
-	public int repChildCnt(int reply_num);
+	public int repChildCnt(int reply_num) throws Exception;
 
-	public int replyInsert(Map<String, String> param);
+	public int replyInsert(Map<String, String> param) throws Exception;
 
-	public List<ReplyVo> rereplyList(Map<String, String> param);
+	public List<ReplyVo> rereplyList(Map<String, String> param) throws Exception;
 
-	public int replyUpdate(Map<String, String> param);
+	public int replyUpdate(Map<String, String> param) throws Exception;
+
+	public int replyDelete(Map<String, String> param) throws Exception;
+
+	public int rereplyInsert(Map<String, String> param) throws Exception;
+
+	public int rereplyDelete(Map<String, String> param) throws Exception;
+
+	public int rereplyUpdate(Map<String, String> param) throws Exception;
 
 }

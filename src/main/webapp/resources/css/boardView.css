@@ -45,14 +45,16 @@
 .repBtn{
 	position : relative;
 	height: 40px;
-	text-align: right;
+	text-align: left;
 }
+
 .rerepCnt{
 	text-align: left;
 	padding-top: 7px;
 	padding-left: 10px;
 	color: #337ab7;
 	cursor:pointer;
+	width: 90px;
 }
 .rerepWrapper{
 	position: relative;
@@ -78,6 +80,7 @@
 	margin:0 auto 0;
 	width: 555px;
 }
-.replyUpdateBtn{
-	margin-top: 40px;
+.rerepInsertBtn{
+	color: black;
+    font-weight: 500;
 }

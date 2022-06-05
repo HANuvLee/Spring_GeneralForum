@@ -193,6 +193,35 @@ public class BoardController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/board/replyUpdate.do", method = RequestMethod.POST)
+	public int replyUpdate(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		System.out.println(param);
+		int replyUpdateChk = boardService.replyUpdate(param);
+
+		return replyUpdateChk;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/replyDelete.do", method = RequestMethod.POST)
+	public int replyDelete(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		System.out.println(param);
+		int replyDeleteChk = boardService.replyDelete(param);
+
+		return replyDeleteChk;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/rereplyInsert.do", method = RequestMethod.POST)
+	public int rereplyInsert(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		String user_name = (String)session.getAttribute("user_name");
+		param.put("creator", user_name);
+		System.out.println(param);
+		int rereplyList = boardService.rereplyInsert(param);
+		
+		return rereplyList;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/board/rereplyList.do", method = RequestMethod.GET)
 	public List<ReplyVo> rereplyList(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
 		System.out.println(param);
@@ -202,11 +231,21 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/board/replyUpdate.do", method = RequestMethod.POST)
-	public int replyUpdate(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+	@RequestMapping(value = "/board/rereplyUpdate.do", method = RequestMethod.POST)
+	public int rereplyUpdate(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
 		System.out.println(param);
-		int replyUpdateChk = boardService.replyUpdate(param);
+		int rereplyUpdateChk = boardService.rereplyUpdate(param);
 
-		return replyUpdateChk;
+		return rereplyUpdateChk;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/rereplyDelete.do", method = RequestMethod.POST)
+	public int rereplyDelete(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		System.out.println(param);
+		int rereplyDeleteChk = boardService.rereplyDelete(param);
+
+		return rereplyDeleteChk;
 	}
 }

@@ -71,71 +71,83 @@
 					rephtml += "<div class= 'reptable'>";
 					rephtml += "<div class='repheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
 					rephtml += "<div class='repbody'>"+res[i].cont+"</div>";
+					rephtml += "<div class='repUpdateForm' repUpdatFormno="+res[i].reply_num+">";
+					rephtml += "</div>";
 					rephtml += "<div class='repBtn'>";
-					rephtml += "<div class='rerepCnt' reply_num="+res[i].reply_num+">답글"+res[i].childCnt+"개보기</div>";	
+					rephtml += "<span class='rerepCnt' onclick='rerepList("+res[i].reply_num+")'>답글"+res[i].childCnt+"개보기</span>";
+					rephtml += "<span class='rerepInsertBtn' onclick='rerepInsertForm("+res[i].reply_num+")'>&nbsp&nbsp답글</span>";
 					if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
-						rephtml += "<span class= 'btn btn-dark repDeleteBtn'>삭제</span>";
-						rephtml += "<span class= 'btn btn-link repUpdateBtn' reply_num="+res[i].reply_num+">수정</span>";
-						rephtml += "<div class='repUpdateForm' repUpdatFormno="+res[i].reply_num+">";
-						rephtml += "</div>";
+						rephtml += "<span class='btn btn-dark repDeleteBtn' onclick='repDelete("+res[i].reply_num+")'>삭제</span>";
+						rephtml += "<span class='btn btn-link repUpdateBtn' onclick='repUpdateForm("+res[i].reply_num+")'>수정</span>";
 					 }
 					rephtml += "</div>";
-					rephtml += "<div class='rerepWrapper' reply_num="+res[i].reply_num+">";
+					rephtml += "<div class='rerepWrapper' grs="+res[i].reply_num+">";
 					rephtml += "</div>";
+					rephtml += "</div>";
+					rephtml += "<div class='rerepInsertForm' rerepInsertFormno="+res[i].reply_num+">";
 					rephtml += "</div>";
 				}
 				$('.repWrapper').html(rephtml);
 				
-				//답글 버튼 클릭 시 답글 리스틀 조회하는 ajax호출
-				$('.rerepCnt').click(function() {
-					let reply_num = ($(this).attr('reply_num'));
-					$.ajax({
-						url : '/board/rereplyList.do',
-						type : 'get',
-						data : {
-							board_num : board_num, 
-							board_type : board_type,
-							reply_num : reply_num
-						},
-						success:function(res){
-							rerephtml = "";
-							for(let i in res){
-								rerephtml += "<div class='rereptable'>";
-								rerephtml += "<div class='rerepheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
-								rerephtml += "<div class='rerepbody'>"+res[i].cont+"</div>";
-								rerephtml += "<div class='rerepBtn'>";
-								/* if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
-								rerephtml += "<span class= 'btn btn-dark rerepDeleteBtn'>삭제</span>";
-								rerephtml += "<span class= 'btn btn-link rerepUpdateBtn'>수정</span>";
-								/* } */
-								rerephtml += "</div>";
-								rerephtml += "</div>";
-							}
-							$('div[grs='+reply_num+']').html(rerephtml);
-						},
-						error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-			                alert("통신 실패.");
-			        	}
-					});
-				});
-				
-				//댓글 수정 버튼 클릭 시 수정폼 밋 버튼 생성
-				$('.repUpdateBtn').click(function(){
-					let reply_num = ($(this).attr('reply_num'));
-					let repUpdateForm = "";
-						repUpdateForm += "<textarea class='form-control replyUpdateForm' rows='1'></textarea>";
-						repUpdateForm += "<div class='replyUpdateBtn'>";
-						repUpdateForm += "<span class='btn btn-dark replyUpdateCancel'>취소</span>"
-						repUpdateForm += "<span class='btn btn-link replyUpdateBtn' onclick='replyUpdate("+reply_num+")'>수정</span>";
-						repUpdateForm += "</div>";
-					$('div[repUpdatFormno='+reply_num+']').html(repUpdateForm);
-				});
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
                     alert("통신 실패.");
             }
 		});
 	};
+	
+	//댓글 수정버튼 클릭 시 수정폼과 연관버튼 생성
+	function repUpdateForm(reply_num) {
+		if($('.replyUpdateForm').length){
+			alert("댓글 수정 중 다른 댓글을 수정할 수 없습니다.");
+			$('.replyUpdateForm').focus();
+		}else{
+			let repUpdateForm = "";
+				repUpdateForm += "<textarea class='form-control replyUpdateForm' rows='1'></textarea>";
+				repUpdateForm += "<div class='replyUpdateBtn'>";
+				repUpdateForm += "<span class='btn btn-dark replyUpdateCancel'>취소</span>"
+				repUpdateForm += "<span class='btn btn-link replyUpdateBtn' onclick='replyUpdate("+reply_num+")'>수정</span>";
+				repUpdateForm += "</div>";
+			$('div[repUpdatFormno='+reply_num+']').html(repUpdateForm);
+		};
+
+		//수정 중 취소 시 수정폼을 없앤다.
+		$('.replyUpdateCancel').click(function() {
+			if($('.replyUpdateForm').val().trim() != ""){
+				alert("댓글 수정 중 취소는 불가합니다.");
+			}else{
+				let repUpdateForm = "";
+				$('div[repUpdatFormno='+reply_num+']').html(repUpdateForm);
+			};
+		});
+	};
+	
+	//답글버튼 클릭 시 입력 폼과 연관버튼 생성
+	function rerepInsertForm(reply_num) {
+		if($('.rereplyInsertForm').length){
+			alert("답글 입력 중에는 다른 답글을 작성할 수 없습니다.");
+			$('.rereplyInsertForm').focus();
+		}else{
+			let rerepInsertForm = "";
+				rerepInsertForm += "<textarea class='form-control rereplyInsertForm' rows='1'></textarea>";
+				rerepInsertForm += "<div class='replyUpdateBtn'>";
+				rerepInsertForm += "<span class='btn btn-dark rereplyInsertCancel'>취소</span>";
+				rerepInsertForm += "<span class='btn btn-link rereplyInsertBtn' onclick='rereplyInsert("+reply_num+")'>저장</span>";
+				rerepInsertForm += "</div>";
+				$('div[rerepInsertFormno='+reply_num+']').html(rerepInsertForm);
+		};
+		
+		//답글 입력 중 취소 시 답글입력폼을 없앤다.
+		$('.rereplyInsertCancel').click(function() {
+			if($('.rereplyInsertForm').val().trim() != ""){
+				alert("답글 입력 중 취소는 불가합니다.");
+			}else{
+				let rerepInsertForm = "";
+				$('div[rerepInsertFormno='+reply_num+']').html(rerepInsertForm);
+			};
+		});
+	};
+	
 	//댓글 수정
 	function replyUpdate(reply_num) {
 		if($('.replyUpdateForm').val().trim() == ""){
@@ -184,6 +196,160 @@
 			});
 		};
 	};
+	
+	//댓글 삭제
+	function repDelete(reply_num) {
+		$.ajax({
+			url : '/board/replyDelete.do',
+			type : 'post',
+			data : {
+				board_num : ${board.board_num}, 
+				board_type :'${board.board_type}',
+				reply_num : reply_num
+			},
+			success:function(){
+				replyList(${board.board_num}, '${board.board_type}');
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.");
+        	}
+		});
+	};
+	
+	//답글 입력 
+	function rereplyInsert(reply_num) {	
+		if($('.rereplyInsertForm').val().trim() == ""){
+			alert("빈 답글내용은 저장이 불가합니다.");
+		}else{
+			let cont = $('.rereplyInsertForm').val();
+			$.ajax({
+				url : '/board/rereplyInsert.do',
+				type : 'post',
+				data : {
+					board_num : ${board.board_num}, 
+					board_type :'${board.board_type}',
+					reply_num : reply_num,
+					cont : cont
+				},
+				success:function(){
+					replyList(${board.board_num}, '${board.board_type}');
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.");
+            	}
+			});
+		};
+	};
+	
+	
+	//답글 리스트 조회
+	function rerepList(reply_num) {
+		if ($('div[rerepNum='+reply_num+']').length) { //답글리스트가 열려있다면 닫아주고 닫아져 있다면 열어준다.
+			rerephtml = "";
+			$('div[grs='+reply_num+']').html(rerephtml);
+			return;
+		}else{
+			$.ajax({
+				url : '/board/rereplyList.do',
+				type : 'get',
+				data : {
+					board_num : ${board.board_num}, 
+					board_type :'${board.board_type}',
+					reply_num : reply_num
+				},
+				success:function(res){
+					rerephtml = "";
+					for(let i in res){
+						rerephtml += "<hr class='rerepline'>";
+						rerephtml += "<div class='rereptable' rerepNum="+res[i].grps+">";
+						rerephtml += "<div class='rerepheader'>"+res[i].creator+" "+res[i].wdate+"</div>";
+						rerephtml += "<div class='rerepbody'>"+res[i].cont+"</div>";
+						rerephtml += "<div class='rerepUpdateForm' rerepUpdatFormno="+res[i].reply_num+"></div>";
+						rerephtml += "<div class='rerepBtn'>";
+						if("${user_name}" == res[i].creator){ //자신의 답글만 수정 및 삭제 가능 */
+						rerephtml += "<span class= 'btn btn-dark rerepDeleteBtn' onclick=rerepDelete("+res[i].reply_num+")>삭제</span>";
+						rerephtml += "<span class= 'btn btn-link rerepUpdateBtn' onclick=rerepUpdateForm("+res[i].reply_num+")>수정</span>";
+						}
+						rerephtml += "</div>";
+						rerephtml += "</div>";
+					}
+					$('div[grs='+reply_num+']').html(rerephtml);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                alert("통신 실패.");
+	        	}
+			});
+		};
+	};
+	
+	//답글 수정버튼 클릭 시 수정폼과 연관버튼 생성
+	function rerepUpdateForm(reply_num) {
+		if($('.rereplyUpdateForm').length){
+			alert("답글 수정 중 다른 댓글을 수정할 수 없습니다.");
+			$('.rereplyUpdateForm').focus();
+		}else{
+			let rerepUpdateForm = "";
+				rerepUpdateForm += "<textarea class='form-control rereplyUpdateForm' rows='1'></textarea>";
+				rerepUpdateForm += "<div class='rereplyUpdateBtn'>";
+				rerepUpdateForm += "<span class='btn btn-dark rereplyUpdateCancel'>취소</span>"
+				rerepUpdateForm += "<span class='btn btn-link rereplyUpdateBtn' onclick='rereplyUpdate("+reply_num+")'>수정</span>";
+				rerepUpdateForm += "</div>";
+			$('div[rerepUpdatFormno='+reply_num+']').html(rerepUpdateForm);
+		};
+
+		//답글 수정 중 취소 시 수정폼을 없앤다.
+		$('.rereplyUpdateCancel').click(function() {
+			if($('.rereplyUpdateForm').val().trim() != ""){
+				alert("답글 수정 중 취소는 불가합니다.");
+			}else{
+				let rerepUpdateForm = "";
+				$('div[rerepUpdatFormno='+reply_num+']').html(rerepUpdateForm);
+			};
+		});
+	};
+	
+	//답글 수정
+	function rereplyUpdate(reply_num) {
+		if($('.rereplyUpdateForm').val().trim() == ""){
+			alert("빈 답글내용은 저장이 불가합니다.");
+		}else{
+			let cont = $('.rereplyUpdateForm').val();
+			$.ajax({
+				url : '/board/rereplyUpdate.do',
+				type : 'post',
+				data : {
+					board_num : ${board.board_num}, 
+					board_type :'${board.board_type}',
+					reply_num : reply_num,
+					cont : cont
+				},
+				success:function(){
+					replyList(${board.board_num}, '${board.board_type}');
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("통신 실패.");
+            	}
+			});
+		};
+	};
+	//답글 삭제
+	function rerepDelete(reply_num) {
+		$.ajax({
+			url : '/board/rereplyDelete.do',
+			type : 'post',
+			data : {
+				board_num : ${board.board_num}, 
+				board_type :'${board.board_type}',
+				reply_num : reply_num
+			},
+			success:function(){
+				replyList(${board.board_num}, '${board.board_type}');
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.");
+        	}
+		});
+	}
 	//댓글 입력 시 버튼 추가
 	$('.replyInsertForm').click(function() {
 		if($('.replyBtn').css('display') == 'none') {
