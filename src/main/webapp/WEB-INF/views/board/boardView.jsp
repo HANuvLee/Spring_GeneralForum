@@ -77,8 +77,10 @@
 					rephtml += "<span class='rerepCnt' onclick='rerepList("+res[i].reply_num+")'>답글"+res[i].childCnt+"개보기</span>";
 					rephtml += "<span class='rerepInsertBtn' onclick='rerepInsertForm("+res[i].reply_num+")'>&nbsp&nbsp답글</span>";
 					if("${user_name}" == res[i].creator ){ //자신의 댓글만 수정 및 삭제 가능 */
+						rephtml += "<span class = 'logUserRepBtn'>";
 						rephtml += "<span class='btn btn-dark repDeleteBtn' onclick='repDelete("+res[i].reply_num+")'>삭제</span>";
 						rephtml += "<span class='btn btn-link repUpdateBtn' onclick='repUpdateForm("+res[i].reply_num+")'>수정</span>";
+						rephtml += "</span>"
 					 }
 					rephtml += "</div>";
 					rephtml += "<div class='rerepWrapper' grs="+res[i].reply_num+">";

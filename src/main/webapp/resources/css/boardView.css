@@ -44,7 +44,7 @@
 }
 .repBtn{
 	position : relative;
-	height: 40px;
+	height: 20px;
 	text-align: left;
 }
 
@@ -83,4 +83,13 @@
 .rerepInsertBtn{
 	color: black;
     font-weight: 500;
+    cursor: pointer;
+}
+.logUserRepBtn{
+	position: relative;
+	float: right;
+}
+.repline{
+	margin-top: 10px;
+    margin-bottom: 10px;
 }
