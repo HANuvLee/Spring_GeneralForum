@@ -1,7 +1,5 @@
 package com.spring.board.vo;
 
-import java.util.ArrayList;
-
 public class BoardVo {
 	
 	private String 	board_type;
@@ -10,6 +8,7 @@ public class BoardVo {
 	private String 	board_comment;
 	private String 	creator;
 	private String	modifier;
+	private int board_view;
 	private int totalCnt;
 	
 	public String getBoard_type() {
@@ -48,14 +47,17 @@ public class BoardVo {
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
+	public int getBoard_view() {
+		return board_view;
+	}
+	public void setBoard_view(int board_view) {
+		this.board_view = board_view;
+	}
 	public int getTotalCnt() {
 		return totalCnt;
 	}
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
 	}
-	
-	
-	
-	
+
 }

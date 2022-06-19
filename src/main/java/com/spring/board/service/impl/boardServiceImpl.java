@@ -164,4 +164,10 @@ public class boardServiceImpl implements boardService{
 		return boardDao.rereplyUpdate(param);
 	}
 
+	@Override
+	public void viewsUpdate(BoardVo boardVo) {
+		boardDao.viewsUpdate(boardVo);
+		
+	}
+
 }

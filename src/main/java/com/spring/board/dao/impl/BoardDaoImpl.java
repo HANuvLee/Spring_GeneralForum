@@ -135,4 +135,10 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.delete("board.rereplyDelete", param);
 	}
 
+	@Override
+	public void viewsUpdate(BoardVo boardVo) {
+		sqlSession.update("board.viewsUpdate", boardVo);
+		
+	}
+
 }

@@ -47,4 +47,6 @@ public interface boardService {
 
 	public int rereplyUpdate(Map<String, String> param) throws Exception;
 
+	public void viewsUpdate(BoardVo boardVo);
+
 }

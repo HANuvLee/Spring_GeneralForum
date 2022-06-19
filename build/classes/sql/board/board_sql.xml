@@ -9,6 +9,7 @@
 		  ,BOARD_TITLE
 		  ,BOARD_COMMENT
 		  ,TOTAL_CNT
+		  ,BOARD_VIEW
 		FROM 
 		(
 		   SELECT
@@ -18,6 +19,7 @@
 				,B.BOARD_COMMENT
 		      	,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
 		      	,COUNT(*) OVER() AS TOTAL_CNT
+		      	,B.BOARD_VIEW
 			FROM
 			BOARD B, COM_CODE C
             WHERE B.BOARD_TYPE = C.CODE_ID
@@ -54,6 +56,13 @@
     	WHERE 	BOARD_TYPE = #{board_type}
     	AND 	BOARD_NUM  = #{board_num}
     </select>	
+    
+    <update id="viewsUpdate" parameterType="com.spring.board.vo.BoardVo">
+    	update board
+		set board_view = board_view + 1 
+		where board_type = #{board_type} 
+		and board_num = #{board_num}
+    </update>
     
     <select id="boardInsert" parameterType="com.spring.board.vo.BoardVo">
         INSERT INTO 

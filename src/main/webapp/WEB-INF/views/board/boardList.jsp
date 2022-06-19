@@ -31,15 +31,17 @@
 			<td colspan="2" style="text-align: right;"><span>total : ${totalCnt}&nbsp;&nbsp;</span></td>
 		</tr>
 		<tr>
-			<td width="80" align="center">Type</td>
-			<td width="40" align="center">No</td>
-			<td width="300" align="center">Title</td>
+			<td width="70" align="center">Type</td>
+			<td width="30" align="center">No</td>
+			<td width="280" align="center">Title</td>
+			<td width="40" align="center">Views</td>
 		</tr>
 		<c:forEach items="${boardList}" var="list">
 			<tr>
 				<td align="center">${list.board_type}</td>
-				<td>${list.board_num}</td>
-				<td><a href="/board/${list.board_type}/${list.board_num}/boardView.do?pageNo=${pageNo}">${list.board_title}</a></td>
+				<td align="center">${list.board_num}</td>
+				<td align="center"><a href="/board/${list.board_type}/${list.board_num}/boardView.do?pageNo=${pageNo}">${list.board_title}</a></td>
+				<td align="center">${list.board_view}</td>
 			</tr>
 		</c:forEach>
 	</table>
