@@ -30,7 +30,7 @@
 	            </foreach>
             </if>
           )
-          WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+          WHERE NUMROW BETWEEN (#{currentPage}-1)*10 + 1 AND (#{currentPage})*10
     </select>
     
     <select id="boardTotal" parameterType="com.spring.board.vo.PageVo" resultType="Integer">

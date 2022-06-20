@@ -1,18 +1,17 @@
 package com.spring.board.vo;
 
-import java.util.ArrayList;
 
 public class PageVo {
 
-	private int pageNo = 0;
+	private int currentPage = 1;
 	private String[] chk;
-
-	public int getPageNo() {
-		return pageNo;
+	
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 	
 	public String[] getChk() {

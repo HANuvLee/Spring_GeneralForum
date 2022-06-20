@@ -17,15 +17,4 @@ $("document").ready(function() {
 		else
 			$("#allchk").prop("checked", true);
 	});
-	//체크박스 선택 후 페이지 클릭 시 선택된 체크박스 요소들을 href문자열에 추가하여 전송
-	if ($("#chkValueList").length) {
-		var chk = new Array();
-		$("input[name=chkList]").each(function(index, item) {
-			chk.push("chk=" + $(item).val());
-		})
-		var chklist = chk.join("&");
-		$(".currentpage a").each(function() {
-			this.href += "&" + chklist;
-		})
-	}
 });

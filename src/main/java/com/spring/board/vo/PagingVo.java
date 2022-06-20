@@ -3,7 +3,7 @@ package com.spring.board.vo;
 public class PagingVo {
 
 		//현재페이지(기본값은 1)					한 페이지에 보여줄 글의 개수				
-		private int currentPage = 1;		private int rowPage   = 10;
+		private int currentPage;		private int rowPage   = 10;
 		//하나의 블록에 몇페이지가 속해있는지, 즉 10이면 <<1,2,3,4,5,6,7,8,9,10>> 페이지가 한블록 
 		private int pageBlock = 10;	
 		//한 페이지의 시작글 번호 								    한 페이지의 마지막 글번호   
@@ -18,15 +18,17 @@ public class PagingVo {
 		//총 메일리스트 갯수						총 메일리스트 개수를 한페이지에 10개씩 나눠 보여줌으로써 나오는 총 페이지 개수 
 		private int total;					private int totalPage;
 
-		public PagingVo(int total, String currentPage1) {
+		public PagingVo(int total, PageVo pageVo) {
 			this.total = total;
-			if (currentPage1 != null) {
-				this.currentPage = Integer.parseInt(currentPage1);			
-			}
+			this.currentPage = pageVo.getCurrentPage();
+			/*
+			 * if (currentPage1 != null) { this.currentPage =
+			 * Integer.parseInt(currentPage1); }
+			 */
 			//10개씩 글이 보여진다면 1페이지에서 시작행은 1 2페이지에서는 시작행 11 되게끔 만듬
-			start = (currentPage - 1) * rowPage + 1; 
-			////10개씩 글이 보여진다면 1페이지에서 마지막행은 10 2페이지에서는 시작행 20 되게끔 만듬
-			end   = start + rowPage - 1;              
+//			start = (currentPage - 1) * rowPage + 1; 
+			//10개씩 글이 보여진다면 1페이지에서 마지막행은 10 2페이지에서는 시작행 20 되게끔 만듬
+//			end   = start + rowPage - 1;              
 			totalPage = (int) Math.ceil((double)total / rowPage);  
 			startPage = currentPage - (currentPage - 1) % pageBlock;
 			endPage = startPage + pageBlock - 1;

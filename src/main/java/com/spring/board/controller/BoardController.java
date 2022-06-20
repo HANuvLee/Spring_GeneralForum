@@ -37,8 +37,10 @@ public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
-	public String boardList(Model model, String currentPage, PageVo pageVo, HttpSession session) throws Exception{
+	@RequestMapping(value = "/board/boardList.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String boardList(Model model, PageVo pageVo, HttpSession session) throws Exception{
+		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
+		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
 		
 		int totalCnt = 0;
 		
@@ -47,16 +49,15 @@ public class BoardController {
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		
-		if (currentPage == null){
-			currentPage = "1";
-			pageVo.setPageNo(Integer.parseInt(currentPage));
+		/*if (pageVo.getCurrentPage() == 0){
+			pageVo.setCurrentPage(1);
 		}else {
-			pageVo.setPageNo(Integer.parseInt(currentPage));
-		}
+			pageVo.setCurrentPage(1);
+		}*/
 		
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt(pageVo);
-		PagingVo pg = new PagingVo(totalCnt, currentPage);
+		PagingVo pg = new PagingVo(totalCnt, pageVo);
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);

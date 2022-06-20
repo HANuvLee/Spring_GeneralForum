@@ -14,14 +14,17 @@
 <title>list</title>
 </head>
 <body>
-	<c:forEach items="${chkList}" var ="chklist" >
-		<c:if test="${chklist != null}">
-			<input type="hidden" id="chkValueList" name="chkList" value="${chklist}">
-		</c:if>
-	</c:forEach>
-
-	<div style="margin: 50px 0px 0px 400px">
-		<a href="/board/Join.do" class="joinbtn">join</a>	
+	<div style="margin: 50px 400px 0px 400px">
+		<a href="/board/Join.do" class="joinbtn">join</a>
+		<span style="float: right">
+			<c:if test="${user_id != null}">
+				<a href="/board/boardWrite.do">글쓰기</a>
+				<a href="/login/Logout.do" class="logoutbtn">로그아웃</a>
+			</c:if>
+			<c:if test="${user_id == null}">
+				<a href="/login/Login.do" class="loginbtn">login</a> 
+			</c:if>
+		</span>
 	</div>
 	<table class="table" id="boardTable">
 		<tr>
@@ -45,39 +48,74 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<div class="currentpage">
-		 <c:if test="${pg.startPage > pg.pageBlock}">
-			<a class="previouspage" href="/board/boardList.do?currentPage=${pg.startPage-pg.pageBlock}">[이전]</a>
-		</c:if>
-		<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
-				<a class="currentpage1" href="/board/boardList.do?currentPage=${i}">[${i}]</a>
-		</c:forEach>
-		<c:if test="${pg.endPage < pg.totalPage}">
-			<a class="nextpage" href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>
-		</c:if>
-	</div>
-	<c:if test="${user_id != null}">
-		<div style="margin-left: 780px;">
-			<a href="/board/boardWrite.do">글쓰기</a>
-			<a href="/login/Logout.do" class="logoutbtn">로그아웃</a>
+	<form id="pageForm" method="post" action="/board/boardList.do">
+		<div class="currentpage">
+		<%-- 	 <c:if test="${pg.startPage > pg.pageBlock}">
+				<a class="previouspage" href="/board/boardList.do?currentPage=${pg.startPage-pg.pageBlock}">[이전]</a>
+			</c:if> --%>
+				<%-- 
+			<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
+					<a class="currentpage1" href="/board/boardList.do?currentPage=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${pg.endPage < pg.totalPage}">
+				<a class="nextpage" href="/board/boardList.do?currentPage=${pg.startPage+pg.pageBlock}">[다음]</a>
+			</c:if> --%>
+			 <c:if test="${pg.startPage > pg.pageBlock}">
+				<a href="#" data-currentPage="${pg.startPage-pg.pageBlock}">[이전]</a>
+			</c:if>
+			<c:forEach var="i" begin="${pg.startPage}" end="${pg.endPage}">	
+					<a href="#" data-currentPage='${i}'>[${i}]</a>
+			</c:forEach>
+			<c:if test="${pg.endPage < pg.totalPage}">
+				<a href="#" data-currentPage="${pg.startPage+pg.pageBlock}">[다음]</a>
+			</c:if>
 		</div>
-	</c:if>
-	<div style="margin-left: 860px;">
-		<c:if test="${user_id == null}">
-				<a href="/login/Login.do" class="loginbtn">login</a> 
-		</c:if>
-	</div>
-	<div style="margin-left: 500px;">
-		<form method="get" action="/board/boardList.do">
+		<input type="hidden" name="currentPage" value="${pg.currentPage}">
+	</form>
+	<form method="post" action="/board/boardList.do">
+		<div style="margin-left: 500px;">
 			<input type="checkbox" id="allchk" value="">전체 
 			<input type="checkbox" id="chk01" name="chk" value="a01">일반 
 			<input type="checkbox" id="chk02" name="chk" value="a02">Q&A 
 			<input type="checkbox" id="chk03" name="chk" value="a03">익명
 			<input type="checkbox" id="chk04" name="chk" value="a04">자유 
 			<input class="btn btn-dark" type="submit" value="조회">
-		</form>
-	</div>
+		</div>
+	</form>
+	<c:forEach items="${chkList}" var ="chklist" >
+		<c:if test="${chklist != null}">
+			<input type="hidden" id="chkValueList" name="chkList" value="${chklist}">
+		</c:if>
+	</c:forEach>
 </body>
-<script type="text/javascript" src="/resources/js/boardList.js" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
+//전체 체크 박스 클릭 시 name이 chk인 체크박스 모두 checked로 활성화 
+$("document").ready(function() {
+	$("#allchk").click(function() {
+		if ($("#allchk").is(":checked"))
+			$("input[name=chk]").prop("checked", true);
+		else
+			$("input[name=chk]").prop("checked", false);
+	})
+
+	//체크박스의 전체 길이와 체크된 체크박스의 길이를 변수에 대입하여 체크 여부에 따른 전체체크 활성화 및 비활성화 
+	$("input[name=chk]").click(function() {
+		var total = $("input[name=chk]").length;
+		var chked = $("input[name=chk]:checked").length;
+
+		if (total != chked)
+			$("#allchk").prop("checked", false);
+		else
+			$("#allchk").prop("checked", true);
+	});
+	
+	//get방식의 페이징처리를 post방식으로 변경
+	$(".currentpage a").on('click',function() {
+		var currentPage = $(this).attr('data-currentPage');
+		$('input[name=currentPage]').val(currentPage);
+		$("#pageForm").submit();
+	})
+	
+});
 </script>
 </html>
