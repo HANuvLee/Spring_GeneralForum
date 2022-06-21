@@ -1,10 +1,13 @@
 package com.spring.board.vo;
 
+import java.util.List;
 
 public class PageVo {
 
-	private int currentPage = 1;
-	private String[] chk;
+	private int currentPage = 0;
+	private String chk;	
+	//Á¶È¸¿ë
+	private String[] chkList;
 	
 	public int getCurrentPage() {
 		return currentPage;
@@ -14,12 +17,20 @@ public class PageVo {
 		this.currentPage = currentPage;
 	}
 	
-	public String[] getChk() {
+	public String getChk() {
 		return chk;
 	}
 
-	public void setChk(String[] chk) {
+	public void setChk(String chk) {
 		this.chk= chk;
+	}
+
+	public String[] getChkList() {
+		return chkList;
+	}
+
+	public void setChkList(String[] chkList) {
+		this.chkList = chkList;
 	}
 	
 }

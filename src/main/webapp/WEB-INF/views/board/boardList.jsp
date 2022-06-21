@@ -70,7 +70,8 @@
 				<a href="#" data-currentPage="${pg.startPage+pg.pageBlock}">[다음]</a>
 			</c:if>
 		</div>
-		<input type="hidden" name="currentPage" value="${pg.currentPage}">
+		<input type="hidden" name="currentPage" value="${cri.currentPage}">
+		<input type="hidden" name="chk" value="${cri.chk}">
 	</form>
 	<form method="post" action="/board/boardList.do">
 		<div style="margin-left: 500px;">
@@ -82,11 +83,6 @@
 			<input class="btn btn-dark" type="submit" value="조회">
 		</div>
 	</form>
-	<c:forEach items="${chkList}" var ="chklist" >
-		<c:if test="${chklist != null}">
-			<input type="hidden" id="chkValueList" name="chkList" value="${chklist}">
-		</c:if>
-	</c:forEach>
 </body>
 <script type="text/javascript" charset="utf-8">
 //전체 체크 박스 클릭 시 name이 chk인 체크박스 모두 checked로 활성화 

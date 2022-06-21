@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -38,23 +39,25 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/board/boardList.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String boardList(Model model, PageVo pageVo, HttpSession session) throws Exception{
+	public String boardList(Model model, PageVo pageVo, String[] chk, HttpSession session) throws Exception{
 		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
-		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
+		System.out.println("PageVo pageVo getChk value => " + pageVo.getChk());
+		System.out.println("String[] chk value => " + Arrays.toString(chk));
 		
 		int totalCnt = 0;
 		
+		if(pageVo.getCurrentPage() == 0) {
+			pageVo.setCurrentPage(1);
+		}
+		if(chk != null) {
+			pageVo.setChkList(chk);
+		}
+	
 		String user_id = (String)session.getAttribute("user_id");
 		String user_name = (String)session.getAttribute("user_name");
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
-		
-		/*if (pageVo.getCurrentPage() == 0){
-			pageVo.setCurrentPage(1);
-		}else {
-			pageVo.setCurrentPage(1);
-		}*/
-		
+	
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt(pageVo);
 		PagingVo pg = new PagingVo(totalCnt, pageVo);
@@ -62,7 +65,7 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pg", pg);
-		model.addAttribute("chkList",pageVo.getChk());
+		model.addAttribute("cri",pageVo);
 
 //		if(user_id == null) {
 //			return "redirect:/login/Login.do";

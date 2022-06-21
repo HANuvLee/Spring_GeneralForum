@@ -23,10 +23,10 @@
 			FROM
 			BOARD B, COM_CODE C
             WHERE B.BOARD_TYPE = C.CODE_ID
-            <if test="chk != null">
+            <if test="chkList != null and chkList.length != 0">
            		 AND B.BOARD_TYPE IN
-	            <foreach collection="chk" item="chk" open="(" separator="," close=")">
-	            #{chk}
+	            <foreach collection="chkList" item="chkList" open="(" separator="," close=")">
+	            #{chkList}
 	            </foreach>
             </if>
           )
@@ -36,10 +36,10 @@
     <select id="boardTotal" parameterType="com.spring.board.vo.PageVo" resultType="Integer">
 		  	SELECT COUNT(*) AS TOTAL_CNT
 			FROM BOARD	
-			<if test="chk != null">
+			<if test="chkList != null and chkList.length != 0">
 				WHERE BOARD_TYPE IN
-				<foreach collection="chk" item="chk" open="(" separator="," close=")">
-				#{chk}
+				<foreach collection="chkList" item="chkList" open="(" separator="," close=")">
+				#{chkList}
 				</foreach>
 			</if>
     </select>

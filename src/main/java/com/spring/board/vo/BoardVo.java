@@ -11,6 +11,9 @@ public class BoardVo {
 	private int board_view;
 	private int totalCnt;
 	
+	//게시글 순번용
+	private int numrow;
+	
 	public String getBoard_type() {
 		return board_type;
 	}
