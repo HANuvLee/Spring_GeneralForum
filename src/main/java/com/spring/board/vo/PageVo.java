@@ -8,7 +8,25 @@ public class PageVo {
 	private String chk;	
 	//Á¶È¸¿ë
 	private String[] chkList;
+	private String searchType;
+	private String searchName;
 	
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
 	public int getCurrentPage() {
 		return currentPage;
 	}

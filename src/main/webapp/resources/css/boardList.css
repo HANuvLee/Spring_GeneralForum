@@ -13,3 +13,8 @@
 .currentpage{
 	text-align: center;
 }
+.searchBoard{
+	position:relative;
+	margin:0 auto 0;
+	width: 400px;
+}

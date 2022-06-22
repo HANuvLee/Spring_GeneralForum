@@ -29,19 +29,39 @@
 	            #{chkList}
 	            </foreach>
             </if>
+            <if test="searchType != null and searchType == 'title'">
+            	AND B.BOARD_TITLE LIKE '%'||#{searchName}||'%'
+            </if>
+             <if test="searchType != null and searchType == 'content'">
+             	AND B.BOARD_COMMENT LIKE '%'||#{searchName}||'%'
+            </if>
+             <if test="searchType != null and searchType == 'titcont'">
+            	AND B.BOARD_TITLE LIKE '%'||#{searchName}||'%' OR B.BOARD_COMMENT LIKE '%'||#{searchName}||'%'
+            </if>
           )
           WHERE NUMROW BETWEEN (#{currentPage}-1)*10 + 1 AND (#{currentPage})*10
     </select>
     
     <select id="boardTotal" parameterType="com.spring.board.vo.PageVo" resultType="Integer">
 		  	SELECT COUNT(*) AS TOTAL_CNT
-			FROM BOARD	
-			<if test="chkList != null and chkList.length != 0">
-				WHERE BOARD_TYPE IN
-				<foreach collection="chkList" item="chkList" open="(" separator="," close=")">
-				#{chkList}
-				</foreach>
-			</if>
+			FROM BOARD
+			<trim prefix="WHERE" prefixOverrides="AND">
+				<if test="chkList != null and chkList.length != 0">
+					AND BOARD_TYPE IN
+					<foreach collection="chkList" item="chkList" open="(" separator="," close=")">
+					#{chkList}
+					</foreach>
+				</if>
+				 <if test="searchType != null and searchType == 'title'">
+	            	AND BOARD_TITLE LIKE '%'||#{searchName}||'%'
+	            </if>
+	             <if test="searchType != null and searchType == 'content'">
+	             	AND BOARD_COMMENT LIKE '%'||#{searchName}||'%'
+	            </if>
+	             <if test="searchType != null and searchType == 'titcont'">
+	   				AND BOARD_TITLE LIKE '%'||#{searchName}||'%' OR BOARD_COMMENT LIKE '%'||#{searchName}||'%'
+	            </if>
+            </trim>
     </select>
     	
     <select id="boardView" parameterType="com.spring.board.vo.BoardVo" resultType="com.spring.board.vo.BoardVo">

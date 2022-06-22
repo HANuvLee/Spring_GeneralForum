@@ -22,7 +22,7 @@
 				<a href="/login/Logout.do" class="logoutbtn">로그아웃</a>
 			</c:if>
 			<c:if test="${user_id == null}">
-				<a href="/login/Login.do" class="loginbtn">login</a> 
+				<a href="/login/Login.do" class="loginbtn">로그인</a> 
 			</c:if>
 		</span>
 	</div>
@@ -48,6 +48,18 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<form method="post" action="/board/boardList.do">
+		<div class="searchBoard">
+			<select class="searchType" name="searchType">
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="titcont">제목+내용</option>
+			</select>
+			<input class="form-control searchName" id="searchName" name="searchName">
+			<input class="btn btn-dark" type="submit" value="검색">		
+		</div>
+		<input type="hidden" name="chk" value="${cri.chk}">
+	</form>
 	<form id="pageForm" method="post" action="/board/boardList.do">
 		<div class="currentpage">
 		<%-- 	 <c:if test="${pg.startPage > pg.pageBlock}">
@@ -70,6 +82,8 @@
 				<a href="#" data-currentPage="${pg.startPage+pg.pageBlock}">[다음]</a>
 			</c:if>
 		</div>
+		<input type="hidden" name="searchType" value="${cri.searchType}">
+		<input type="hidden" name="searchName" value="${cri.searchName}">
 		<input type="hidden" name="currentPage" value="${cri.currentPage}">
 		<input type="hidden" name="chk" value="${cri.chk}">
 	</form>
@@ -82,6 +96,8 @@
 			<input type="checkbox" id="chk04" name="chk" value="a04">자유 
 			<input class="btn btn-dark" type="submit" value="조회">
 		</div>
+		<input type="hidden" name="searchType" value="${cri.searchType}">
+		<input type="hidden" name="searchName" value="${cri.searchName}">
 	</form>
 </body>
 <script type="text/javascript" charset="utf-8">

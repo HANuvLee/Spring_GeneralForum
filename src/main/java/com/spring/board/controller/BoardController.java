@@ -40,19 +40,28 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String boardList(Model model, PageVo pageVo, String[] chk, HttpSession session) throws Exception{
-		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
-		System.out.println("PageVo pageVo getChk value => " + pageVo.getChk());
-		System.out.println("String[] chk value => " + Arrays.toString(chk));
-		
+	
 		int totalCnt = 0;
+		
+		if (pageVo.getSearchName() != null) {
+			//ÇÑ±Û ±úÁü Ã³¸®
+			pageVo.setSearchName(new String(pageVo.getSearchName().getBytes("8859_1"),"euc-kr"));			
+		}
 		
 		if(pageVo.getCurrentPage() == 0) {
 			pageVo.setCurrentPage(1);
 		}
+		
 		if(chk != null) {
 			pageVo.setChkList(chk);
 		}
-	
+		
+		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
+		System.out.println("PageVo pageVo getChk value => " + pageVo.getChk());
+		System.out.println("String[] chk value => " + Arrays.toString(chk));
+		System.out.println("PageVo pageVo searchName value => " + pageVo.getSearchName());
+		System.out.println("PageVo pageVo searchType value => " + pageVo.getSearchType());
+		
 		String user_id = (String)session.getAttribute("user_id");
 		String user_name = (String)session.getAttribute("user_name");
 		
