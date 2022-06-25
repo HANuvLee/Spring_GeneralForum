@@ -56,12 +56,6 @@ public class BoardController {
 			pageVo.setChkList(chk);
 		}
 		
-		System.out.println("PageVo pageVo currentPage value => " + pageVo.getCurrentPage());
-		System.out.println("PageVo pageVo getChk value => " + pageVo.getChk());
-		System.out.println("String[] chk value => " + Arrays.toString(chk));
-		System.out.println("PageVo pageVo searchName value => " + pageVo.getSearchName());
-		System.out.println("PageVo pageVo searchType value => " + pageVo.getSearchType());
-		
 		String user_id = (String)session.getAttribute("user_id");
 		String user_name = (String)session.getAttribute("user_name");
 		

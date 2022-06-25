@@ -50,7 +50,7 @@
 	</table>
 	<form method="post" action="/board/boardList.do">
 		<div class="searchBoard">
-			<select class="searchType" name="searchType">
+			<select class="form-control searchType" name="searchType">
 				<option value="title">力格</option>
 				<option value="content">郴侩</option>
 				<option value="titcont">力格+郴侩</option>
