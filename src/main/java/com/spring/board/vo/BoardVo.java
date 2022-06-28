@@ -9,6 +9,8 @@ public class BoardVo {
 	private String 	creator;
 	private String	modifier;
 	private int board_view;
+	private String board_rec;
+	
 	private int totalCnt;
 	
 	//게시글 순번용
@@ -55,6 +57,12 @@ public class BoardVo {
 	}
 	public void setBoard_view(int board_view) {
 		this.board_view = board_view;
+	}
+	public String getBoard_rec() {
+		return board_rec;
+	}
+	public void setBoard_rec(String board_rec) {
+		this.board_rec = board_rec;
 	}
 	public int getTotalCnt() {
 		return totalCnt;

@@ -16,8 +16,8 @@
 </head>
 <body>
 <form action="/board/boardWriteAction.do" method="post">
-	<div style="margin: 50px 0 10px 840px;">
-		<input type="submit" value="작성" class="btn btn-dark">
+	<div style="margin: 10px 0 5px 840px;">
+		<a href="/board/boardList.do">List</a>
 	</div>
 	<table align="center" class="table">
 		<tr>
@@ -42,11 +42,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td height="300" align="center">
+			<td height="200" align="center">
 				Comment
 			</td>
 			<td valign="top">
-			<textarea name="board_comment"  rows="20" cols="55"></textarea>
+			<textarea name="board_comment"  rows="15" cols="55"></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -58,8 +58,8 @@
 			</td>
 		</tr>
 	</table>
-	<div style="margin: 10px 0 20px 840px;">
-		<a href="/board/boardList.do">List</a>
+	<div style="margin: 10px 0 10px 840px;">
+		<input type="submit" value="작성" class="btn btn-dark">
 	</div>
 </form>	
 </body>

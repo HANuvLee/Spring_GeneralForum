@@ -20,7 +20,10 @@
 	<table align="center" class="table">
 		<tr>
 			<td width="120" align="center">Title</td>
-			<td width="400">${board.board_title}</td>
+			<td width="400">${board.board_title}
+				<img class="recPng" src="/resources/img/pngwing.com (2).png" alt="recImage" onclick="boardRecommend()">
+			</td>
+			
 		</tr>
 		<tr>
 			<td height="300" align="center">Comment</td>
@@ -364,5 +367,10 @@
 		$('.replyInsertForm').val("");
 		$('.replyBtn').css('display', 'none');
 	});
+	
+	//게시글 추천버튼 클릭
+	function boardRecommend() {
+		alert("work");
+	}
 </script>
 </html>
