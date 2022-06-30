@@ -170,4 +170,22 @@ public class boardServiceImpl implements boardService{
 		
 	}
 
+	@Override
+	public int recommendSelect(BoardVo boardVo) {
+		if (boardVo.getBoard_type().equals("일반") ) {
+			boardVo.setBoard_type("a01");
+		}
+		else if(boardVo.getBoard_type().equals("Q&A")) {
+			boardVo.setBoard_type("a02");
+		}
+		else if(boardVo.getBoard_type().equals("익명")) {
+			boardVo.setBoard_type("a03");
+		}
+		else if(boardVo.getBoard_type().equals("자유")) {
+			boardVo.setBoard_type("a04");
+		}
+		
+		return boardDao.recommendSelect(boardVo);
+	}
+
 }

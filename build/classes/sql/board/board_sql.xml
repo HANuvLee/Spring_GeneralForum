@@ -268,9 +268,9 @@
     
     <update id="rereplyUpdate" parameterType="map">
     	update board_reply set cont = #{cont}
-			where board_num = #{board_num}
-			and board_type = #{board_type}
-			and reply_num =#{reply_num}
+		where board_num = #{board_num}
+		and board_type = #{board_type}
+		and reply_num =#{reply_num}
     </update>
     
     <delete id="rereplyDelete" parameterType="map">
@@ -280,4 +280,11 @@
 		and board_type = #{board_type}
 		and reply_num = #{reply_num}
     </delete>
+    <select id="recommendSelect" parameterType="com.spring.board.vo.BoardVo" resultType="int">
+    	select count(*)
+		from board_recommend
+		where recommend = '1'
+		and board_num = #{board_num}
+		and board_type = #{board_type}
+    </select>
 </mapper>

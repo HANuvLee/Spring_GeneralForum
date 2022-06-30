@@ -9,6 +9,8 @@ public class BoardVo {
 	private String 	creator;
 	private String	modifier;
 	private int board_view;
+	//게시글 추천수
+	private int board_recommend;
 	
 	private int totalCnt;
 	
@@ -62,6 +64,12 @@ public class BoardVo {
 	}
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
+	}
+	public int getBoard_recommend() {
+		return board_recommend;
+	}
+	public void setBoard_recommend(int board_recommend) {
+		this.board_recommend = board_recommend;
 	}
 
 }

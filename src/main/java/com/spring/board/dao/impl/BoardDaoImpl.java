@@ -141,4 +141,10 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
+	@Override
+	public int recommendSelect(BoardVo boardVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("board.recommendSelect", boardVo);
+	}
+
 }

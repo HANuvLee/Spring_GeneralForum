@@ -64,6 +64,17 @@ public class BoardController {
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt(pageVo);
 		PagingVo pg = new PagingVo(totalCnt, pageVo);
+
+		System.out.println(boardList.get(0).getBoard_num());
+
+		//게시글 추천수 조회
+		
+		  for(int i = 0; i<boardList.size(); i++) {
+			  int board_recommend = boardService.recommendSelect(boardList.get(i));
+			  boardList.get(i).setBoard_recommend(board_recommend);
+			  System.out.println(boardList.get(i).getBoard_recommend());
+		  }
+		 
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);

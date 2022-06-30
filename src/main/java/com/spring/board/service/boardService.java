@@ -49,4 +49,6 @@ public interface boardService {
 
 	public void viewsUpdate(BoardVo boardVo);
 
+	public int recommendSelect(BoardVo boardVo);
+
 }
