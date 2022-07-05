@@ -49,6 +49,7 @@ public interface boardService {
 
 	public void viewsUpdate(BoardVo boardVo);
 
-	public int recommendSelect(BoardVo boardVo);
+	public int recCheck(Map<String, String> param);
+
 
 }

@@ -64,17 +64,6 @@ public class BoardController {
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt(pageVo);
 		PagingVo pg = new PagingVo(totalCnt, pageVo);
-
-		System.out.println(boardList.get(0).getBoard_num());
-
-		//게시글 추천수 조회
-		
-		  for(int i = 0; i<boardList.size(); i++) {
-			  int board_recommend = boardService.recommendSelect(boardList.get(i));
-			  boardList.get(i).setBoard_recommend(board_recommend);
-			  System.out.println(boardList.get(i).getBoard_recommend());
-		  }
-		 
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
@@ -206,7 +195,7 @@ public class BoardController {
 	public int replyInsert(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
 		String user_name = (String)session.getAttribute("user_name");
 		param.put("creator", user_name);
-		System.out.println(param);
+
 		int chk = boardService.replyInsert(param);
 		return chk;
 	}
@@ -234,7 +223,7 @@ public class BoardController {
 	public int rereplyInsert(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
 		String user_name = (String)session.getAttribute("user_name");
 		param.put("creator", user_name);
-		System.out.println(param);
+
 		int rereplyList = boardService.rereplyInsert(param);
 		
 		return rereplyList;
@@ -243,7 +232,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/board/rereplyList.do", method = RequestMethod.GET)
 	public List<ReplyVo> rereplyList(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
-		System.out.println(param);
+
 		List<ReplyVo> rereplyList = boardService.rereplyList(param);
 		
 		return rereplyList;
@@ -252,7 +241,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/board/rereplyUpdate.do", method = RequestMethod.POST)
 	public int rereplyUpdate(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
-		System.out.println(param);
+		
 		int rereplyUpdateChk = boardService.rereplyUpdate(param);
 
 		return rereplyUpdateChk;
@@ -262,9 +251,25 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/board/rereplyDelete.do", method = RequestMethod.POST)
 	public int rereplyDelete(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
-		System.out.println(param);
+
 		int rereplyDeleteChk = boardService.rereplyDelete(param);
 
 		return rereplyDeleteChk;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/recommendAdd.do", method = RequestMethod.POST)
+	public void recommendAdd(@RequestParam Map<String, String> param, HttpSession session) throws Exception {
+		
+		//추천되어있는지 여부 확인
+		int result = boardService.recCheck(param);
+
+		
+		if(result == 0) { //추천하지 않았다면 추가
+			
+		}else { //추천했다면 제거
+			
+		}
+
 	}
 }

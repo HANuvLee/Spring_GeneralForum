@@ -142,9 +142,9 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int recommendSelect(BoardVo boardVo) {
+	public int recCheck(Map<String, String> param) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("board.recommendSelect", boardVo);
+		return sqlSession.selectOne("board.recCheck", param);
 	}
 
 }

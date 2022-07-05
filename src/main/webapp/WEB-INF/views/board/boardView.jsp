@@ -21,7 +21,7 @@
 		<tr>
 			<td width="120" align="center">Title</td>
 			<td width="400">${board.board_title}
-				<img class="recPng" src="/resources/img/pngwing.com (2).png" alt="recImage" onclick="boardRecommend()">
+				<img class="recPng" src="/resources/img/pngwing.com (2).png" alt="recImage">
 			</td>
 			
 		</tr>
@@ -369,8 +369,39 @@
 	});
 	
 	//게시글 추천버튼 클릭
-	function boardRecommend() {
-		alert("work");
+	$('.recPng').click(function(){
+		var userId = '${user_id}';
+
+		if(userId == null){
+			alert("로그인을 해주세요.");
+		}else{
+			var chk = confirm("해당 게시글을 추천하시겠습니까?");
+			
+			if(chk){
+				boardRecommend(userId);
+			}else{
+				alert("취소하였습니다.");
+			}
+		}
+		
+	});
+	
+	function boardRecommend(userId) {
+		$.ajax({
+			url : '/board/recommendAdd.do',
+			type : 'post',
+			data : {
+				user_id : userId,
+				board_num : ${board.board_num}, 
+				board_type :'${board.board_type}'
+			},
+			success:function(){
+				alert("성공");
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	               alert("통신 실패.");
+	       	}
+		}); 
 	}
 </script>
 </html>

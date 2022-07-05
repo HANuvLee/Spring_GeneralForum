@@ -280,10 +280,11 @@
 		and board_type = #{board_type}
 		and reply_num = #{reply_num}
     </delete>
-    <select id="recommendSelect" parameterType="com.spring.board.vo.BoardVo" resultType="int">
-    	select count(*)
+    
+    <select id="recCheck" parameterType="map" resultType="int">
+    	select recommend
 		from board_recommend
-		where recommend = '1'
+		where user_id = #{user_id}
 		and board_num = #{board_num}
 		and board_type = #{board_type}
     </select>
